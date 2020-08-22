@@ -1,0 +1,21 @@
+version: '3'
+services:
+    db:
+        image: postgres
+        env_file:
+            - database.env
+        volumes:
+            - database-data:/var/lib/postgressql/data
+        ports:
+            - "5432:5432"
+    web:
+        build: .
+        ports:
+            - "8989:3000"
+        command: npm run dev
+        volumes:
+            - ./familylistapp:/app
+            - /app/node_modules
+            - /app/.next
+volumes:
+    database-data:
