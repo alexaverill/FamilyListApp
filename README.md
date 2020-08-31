@@ -2,5 +2,4 @@
 A re-write of a list application designed to help simplify lists for family holiday lists. A replacement for a convoluted email system;
 
 ## Building
-Assuming you have docker installed on you machine building should be as simple and cloning this repo and running ```docker-compose up```.
- 
+Assuming you have docker installed on you machine building should be as simple and cloning this repo and running ```docker-compose up 
