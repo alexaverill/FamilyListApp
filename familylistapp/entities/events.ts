@@ -1,25 +1,25 @@
-import {Entity,Column,PrimaryGeneratedColumn, OneToOne, OneToMany, ManyToMany, JoinTable} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinColumn} from "typeorm";
 import { User } from "./user";
 import { type } from "os";
 
 @Entity()
 export class Event{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("int")
     id:number;
-    @Column()
+    @Column("text")
     name:string;
-    @Column()
+    @Column("text")
     image:string;
-    @Column()
+    @Column("date")
     date:Date;
-    @Column()
+    @Column("text")
     comments:string;
-    @Column()
+    @Column("bool")
     active:boolean;
     @ManyToMany(type=>User)
-    @JoinTable
+    @JoinColumn()
     givers:User[];
     @ManyToMany(type=>User)
-    @JoinTable
+    @JoinColumn()
     recievers:User[];
 }

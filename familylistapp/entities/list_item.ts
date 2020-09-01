@@ -3,19 +3,19 @@ import { User } from "./user";
 
 @Entity()
 export class ListItem{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("int")
     id:number;
-    @Column()
+    @Column("text")
     name:string;
-    @Column()
+    @Column("text")
     url:string;
-    @Column()
+    @Column("bool")
     isClaimed:boolean;
     @OneToOne(type=>User)
     @JoinColumn()
     claimedBy:User;
-    @Column()
+    @Column("int")
     quantity:number;
-    @Column()
+    @Column("text")
     comments:string
 }

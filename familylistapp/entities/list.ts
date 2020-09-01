@@ -4,11 +4,11 @@ import { ListItem } from "./list_item";
 
 @Entity()
 export class List{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("int")
     id:number;
-    @Column()
+    @Column("text")
     name:string;
-    @Column()
+    @Column("bool")
     active:boolean;
     @OneToMany(type=>ListItem)
     items:ListItem[]

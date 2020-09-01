@@ -2,15 +2,15 @@ import {Entity,Column,PrimaryGeneratedColumn, ManyToMany} from "typeorm";
 
 @Entity()
 export class User{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("int")
     id:number;
-    @Column()
+    @Column("text")
     name:string;
-    @Column()
+    @Column("text")
     email:string;
-    @Column()
+    @Column("text")
     password:string;
-    @Column()
+    @Column("date")
     birthday:Date;
     @ManyToMany(type=>Event)
     givers:Event[];
