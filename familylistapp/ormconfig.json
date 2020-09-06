@@ -1,14 +1,14 @@
 {
     "type": "postgres",
-    "host": "localhost",
+    "host": "db",
     "port": 5432,
     "username": "user",
     "password": "password",
     "database": "testdb",
     "synchronize": true,
-    "logging": false,
+    "logging": true,
     "entities": [
-       "/entities/**/*.ts"
+       "./entities/*.ts"
     ],
     "migrations": [
        "migration/**/*.ts"
