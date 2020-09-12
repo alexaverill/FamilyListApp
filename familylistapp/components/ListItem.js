@@ -2,7 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import {claimItem, unclaimItem, getUser} from './API';
+//import {claimItem, unclaimItem, getUser} from './API';
 import {getID} from './Session';
 class ListItem extends React.Component {
     constructor(props){
