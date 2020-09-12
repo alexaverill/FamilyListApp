@@ -2,6 +2,8 @@ async function GetRequest(url){
     const response = await fetch(url,{
         method:'GET'
     });
+    console.log("API response: ");
+    console.log(response);
     if(response === null || response === undefined){
         return {status:"failed"};
     }

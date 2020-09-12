@@ -18,12 +18,10 @@ class HomeView extends React.Component{
         this.state={events:[]};
     }
     componentDidMount(){
-        GetRequest(process.env.URL+"/api/event").then((data)=>{
-            console.log(data);
+        console.log(process.env.URL);
+        GetRequest("/api/event").then((data)=>{
+            this.setState({events:data});
         });
-        // getAllEvents().then(data=>{
-        //     this.setState({events:data});
-        // });
     }
 
     render(){

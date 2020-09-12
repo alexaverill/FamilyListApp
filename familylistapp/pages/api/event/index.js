@@ -9,5 +9,5 @@ export default async function (req, res) {
     );
     //console.log(model.sequelize.models.events);
     console.log(EventJson);
-    res.json({});
+    res.json(EventJson);
 }
