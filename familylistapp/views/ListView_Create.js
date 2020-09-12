@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import {createList,getEvent} from './API.js';
+import {GetRequest} from '../utils/api'
 // import CreateListItem from './CreateListItem.js';
 import CreateListItem from '../components/ListItem_Create';
 //import {Link} from "react-router-dom";
@@ -19,6 +19,10 @@ class CreateListView extends React.Component{
     }
     componentDidMount(){
         console.log(this.props.id); 
+        let url = "/api/event/"+this.props.id;
+        GetRequest(url).then((data)=>{
+            this.setState({eventName:data.eventName,eventID:data.id})
+        })
         // getEvent(this.props.match.params.id).then(data=>{
             
         //     this.setState({eventName:data.event.eventName,eventID:data.event.id})
