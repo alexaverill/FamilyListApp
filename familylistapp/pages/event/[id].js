@@ -1,8 +1,8 @@
+import EventView from "../../views/EventView"
 const Event = props =>{
     return (
-        <>
-        <h1>{props.id}</h1>
-        </>
+        <EventView id={props.id}/>
+
     )
 }
 Event.getInitialProps = ({query})=>{

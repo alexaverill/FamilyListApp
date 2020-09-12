@@ -8,7 +8,7 @@ class EventCard extends React.Component {
         //{this.props.date.toDateString()}
     }
     render() {
-        let url = "events/"+this.props.id;
+        let url = "event/"+this.props.id;
         let image = "images/"+this.props.image+".jpg";
         return (
             <Card style={{ width: '18rem' }}>

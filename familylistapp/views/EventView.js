@@ -4,13 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {getEvent,getEventLists} from './API.js';
-import { getID } from './Session.js';
+import { GetRequest } from '../utils/api';
+//import {getEvent,getEventLists} from './API.js';
+//import { getID } from './Session.js';
 class EventView extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            id:this.props.match.params.id,
+            id:this.props.id,
             name:'',
             date:'',
             giving:[],
@@ -22,23 +23,25 @@ class EventView extends React.Component {
         };
     }
     componentDidMount(){
-        getEvent(this.props.match.params.id).then(data=>{
-            let givers = data.event.Givers.map((obj)=>obj.id);
+        let url = "/api/event/"+this.props.id;
+        GetRequest(url).then(data=>{
+            console.log(data);
+            //let givers = data.event.Givers.map((obj)=>obj.id);
             
-            let recievers = data.event.Receivers.map((obj)=>obj.id);
-            let availableLists = data.event.lists.map((obj)=>obj.userId);
-            let userID = getID();
-            let rec = recievers.indexOf(userID) >= 0;
-            let date = new Date(data.event.eventDate);
+            //let recievers = data.event.Receivers.map((obj)=>obj.id);
+            //let availableLists = data.event.lists.map((obj)=>obj.userId);
+            //let userID = getID();
+            //let rec = recievers.indexOf(userID) >= 0;
+            let date = new Date(data.eventDate);
             this.setState({
-                name:data.event.eventName,
+                name:data.eventName,
                 date:date.toDateString(),
-                giving:givers,
-                recieving:recievers, 
-                isRecieving:rec,
-                 lists:data.event.lists,
-                currentListIDs:availableLists,
-                userID:getID()
+                // giving:givers,
+                // recieving:recievers, 
+                // isRecieving:rec,
+                //  lists:data.event.lists,
+                // currentListIDs:availableLists,
+                //userID:getID()
                 });
             
             
