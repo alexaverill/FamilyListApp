@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import EventCard from '../components/EventCard.js';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {getAllEvents} from './API.js';
+import {GetRequest} from '../utils/api';
 class HomeCard{
     constructor(id,date,title){
         this.id = id;
@@ -18,9 +18,12 @@ class HomeView extends React.Component{
         this.state={events:[]};
     }
     componentDidMount(){
-        getAllEvents().then(data=>{
-            this.setState({events:data});
+        GetRequest(process.env.URL+"/api/event").then((data)=>{
+            console.log(data);
         });
+        // getAllEvents().then(data=>{
+        //     this.setState({events:data});
+        // });
     }
 
     render(){

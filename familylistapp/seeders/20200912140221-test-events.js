@@ -11,21 +11,25 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('events'.[
+   await queryInterface.bulkInsert('events',[
      {
       eventName: "Event 1",
-      eventDate: new Date(2020,01,10),
+      eventDate: new Date(),
       image: "",
       comments: "",
-      active: true
+      active: 'true',
+      createdAt: new Date(),
+        updatedAt: new Date()
      },
      {
       eventName: "Event 2",
-      eventDate: new Date(2020,10,10),
+      eventDate: new Date(),
       image: "",
       comments: "",
-      active: true
-     }
+      active: 'true',
+      createdAt: new Date(),
+        updatedAt: new Date()
+         }
    ]);
   },
 
