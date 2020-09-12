@@ -50,7 +50,7 @@ class EventView extends React.Component {
     render(){
         let title = this.state.name;
         let date = this.state.date;
-        let url = "/createList/"+this.state.id;
+        let url = "/list/create/"+this.state.id;
         let btnText = 'Create Your List';
         if(this.state.currentListIDs.indexOf(this.state.userID)>=0){
             btnText = "Edit Your List"

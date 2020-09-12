@@ -1,8 +1,8 @@
+const { default: CreateListView } = require("../../../views/ListView_Create")
+
 const List = props =>{
     return (
-        <>
-        <h1>{props.id}</h1>
-        </>
+        <CreateListView id={props.id}/>
     )
 }
 List.getInitialProps = ({query})=>{
