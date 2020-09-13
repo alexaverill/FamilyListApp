@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { PostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
 
 class CreateEventView extends React.Component {
@@ -29,6 +30,18 @@ class CreateEventView extends React.Component {
         //console.log("Submitted");
         //console.log(event);
         event.preventDefault();
+        let usr = "/api/event";
+        let data = {
+            name:this.state.name,
+            date:this.state.date,
+            comments:this.state.comments,
+            giving:[],
+            recieving:[]
+        }
+        PostRequest(url,data),then(data=>{
+            if(data.status === false){return;}
+            
+        });
         // createEvent(this.state.name,this.state.date,this.state.comments,this.state.giving,this.state.recieving).then(data=>{
         //     if(data.status ==="true"){
         //         let url = "/events/"+data.id;

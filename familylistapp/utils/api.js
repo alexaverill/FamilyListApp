@@ -5,12 +5,12 @@ async function GetRequest(url){
     console.log("API response: ");
     console.log(response);
     if(response === null || response === undefined){
-        return {status:"failed"};
+        return {status:false};
     }
     if(response.status == 200){
     return response.json();
     }
-    return {status:"failed"};
+    return {status:false};
 }
 async function PostRequest(url,data){
     const response = await fetch(url,{
@@ -18,12 +18,12 @@ async function PostRequest(url,data){
         body:JSON.stringify(data)
     });
     if(response === null || response === undefined){
-        return {status:"failed"};
+        return {status:false};
     }
     if(response.status == 200){
         return response.json();
         }
-        return {status:"failed"};
+        return {status:false};
 }
 module.exports = {
     GetRequest,
