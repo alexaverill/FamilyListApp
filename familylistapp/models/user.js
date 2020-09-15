@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      console.log(models.models);
+      user.belongsToMany(models.models.events,{through:"givers"});
+      user.belongsToMany(models.models.events,{through:"receivers"});
+      user.hasMany(models.models.lists);
     }
   };
   user.init({

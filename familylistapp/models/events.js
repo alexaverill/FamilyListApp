@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      console.log(models.models);
       // define association here
+      events.belongsToMany(models.models.user,{as:"Givers",through:'givers'});
+      events.belongsToMany(models.models.user,{as:"Recievers",through:"recievers"});
+      events.hasMany(models.models.lists)
     }
   };
   events.init({

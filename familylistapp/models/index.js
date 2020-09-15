@@ -36,12 +36,21 @@ modules.forEach((module) => {
 //     const model = require(p); //(sequelize, Sequelize.DataTypes);
 //     db[model.name] = model;
 //   });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// modules.forEach((module) => {
+//   module.associate(db);
+// });
+// Object.keys(db).forEach(modelName => {
+//   console.log("Model Names: "+modelName);
+//   if (db[modelName].associate) {
+//     db[modelName].associate(db);
+//   }
+  
+// });
+Object.keys(models).forEach(name =>{
+  //console.log(name);
+  models[name].associate(sequelize);
+})
+//console.log(models);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

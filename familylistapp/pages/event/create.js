@@ -1,9 +1,10 @@
 import React from 'react';
-export default class CreateEvent extends React.Component{
+import CreateEvent from '../../components/CreateEvent';
+export default class CreateEventView extends React.Component{
     render(){
         return(
             <>
-            <h1>I am a create Page!</h1>
+            <CreateEvent/>
             </>
         )
     }

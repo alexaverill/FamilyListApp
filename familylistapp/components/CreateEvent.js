@@ -5,10 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { PostRequest } from '../utils/api.js';
+import { GetRequest, PostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
 
-class CreateEventView extends React.Component {
+class CreateEvent extends React.Component {
     
     constructor(props){
         super(props);
@@ -24,21 +24,22 @@ class CreateEventView extends React.Component {
         this.setState({name:_name});
     }
     handleDateChange(event){
+        console.log(event.target.value);
         this.setState({date:event.target.value});
     }
     async handleSubmit(event){
         //console.log("Submitted");
         //console.log(event);
         event.preventDefault();
-        let usr = "/api/event";
+        let url = "/api/event";
         let data = {
             name:this.state.name,
             date:this.state.date,
             comments:this.state.comments,
-            giving:[],
-            recieving:[]
+            giving:this.state.giving,
+            recieving:this.state.recieving
         }
-        PostRequest(url,data),then(data=>{
+        PostRequest(url,data).then(data=>{
             if(data.status === false){return;}
             
         });
@@ -87,7 +88,10 @@ class CreateEventView extends React.Component {
         return users;
     }
     componentDidMount(){
-      this.queryUsers().then((user)=>{
+        let url = "/api/user";
+     GetRequest(url).then((user)=>{
+         console.log(user);
+         if(user.status === false) {return;}
           this.setState({users:user});
         });
         
