@@ -23,7 +23,7 @@ export default async function (req, res) {
         {
             attributes: ['id', 'eventName', 'eventDate','image'],
             
-            include:['Givers']
+            include:["Givers","Recievers"]
         }
         
     );

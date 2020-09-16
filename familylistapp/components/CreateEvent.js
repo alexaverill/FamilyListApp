@@ -12,12 +12,23 @@ class CreateEvent extends React.Component {
     
     constructor(props){
         super(props);
-        this.state = {name:'',date:new Date(),comments:'',users:[{id:1,username:"test"},{id:2,username:"lol"}],giving:[],recieving:[]};
+        this.state = {name:'',
+                    date:new Date(),
+                    comments:'',
+                    users:[{id:1,username:"test"},{id:2,username:"lol"}],
+                    giving:[],
+                    recieving:[],
+                    givingStatus:[],
+                    recievingStatus:[]
+                };
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleGiving = this.handleGiving.bind(this);
         this.handleRecieving = this.handleRecieving.bind(this);
+        //this.checkAll = this.checkAll.bind(this);
+        this.checkAllGiving = this.checkAllGiving.bind(this);
+        this.checkAllRecieving = this.checkAllRecieving.bind(this);
     }
     handleNameChange(event){
         const _name = event.target.value;
@@ -52,34 +63,39 @@ class CreateEvent extends React.Component {
         // });
 
     }
-    handleGiving(event){
+    handleGiving(event,pos){
+        console.log("Giving Changed "+pos);
+        let giveArr = this.state.givingStatus;
+        giveArr[pos] = !giveArr[pos];
         let value = event.target.name;
         let givingArr = this.state.giving;
         if(event.target.checked){
             if(givingArr.indexOf(value)<0){
                 givingArr.push(value);
-                this.setState({giving:givingArr});
+                this.setState({giving:givingArr,givingStatus:giveArr});
             }
         }else{
         
             let pos = givingArr.indexOf(value);
             givingArr.splice(pos,1);
-            this.setState({giving:givingArr});
+            this.setState({giving:givingArr,givingStatus:giveArr});
         }
     }
-    handleRecieving(event){
+    handleRecieving(event,pos){
         let value = event.target.name;
+        let recieveArr = this.state.recievingStatus;
+        recieveArr[pos] = !giveArr[pos];
         let recievingArr = this.state.recieving;
         if(event.target.checked){
             if(recievingArr.indexOf(value)<0){
                 recievingArr.push(value);
-                this.setState({recieving:recievingArr});
+                this.setState({recieving:recievingArr,recievingStatus:recieveArr});
             }
         }else{
         
             let pos = recievingArr.indexOf(value);
             recievingArr.splice(pos,1);
-            this.setState({recieving:recievingArr});
+            this.setState({recieving:recievingArr,recievingStatus:recieveArr});
         }
     }
     async queryUsers(){
@@ -93,16 +109,60 @@ class CreateEvent extends React.Component {
          console.log(user);
          if(user.status === false) {return;}
           this.setState({users:user});
+          this.state.users.map((u)=> {
+            this.setState((state, props) => ({
+                    givingStatus:  [...state.givingStatus,false],
+                    recievingStatus: [...state.givingStatus,false]
+                  }));
+            
         });
         
         //this.setState({users:userList});
+    });
+    }
+    // checkAll(name){
+    //     let checks = document.getElementsByClassName(name+"Check");
+    //     checks.forEach(item=>{
+    //         console.log(item);
+    //     });
+    // }
+    check(){
+        console.log("Test");
+    }
+    checkAllGiving(){
+        // let allGiving = this.state.AllGivingChecked;
+        this.setState((state, props) => ({
+            givingStatus: state.givingStatus.map((val)=>{
+                return !val;
+            }),
+            giving:state.users.map((usr)=>{
+                return usr.id;
+            })
+          }));
+
+    }
+    checkAllRecieving(){
+        this.setState((state, props) => ({
+            recievingStatus: state.recievingStatus.map((val)=>{
+                return !val;
+            }),
+            giving:state.users.map((usr)=>{
+                return usr.id;
+            })
+          }));
     }
     render() {
-        const items = this.state.users.map((u)=> <Form.Group controlId="formBasicCheckbox" as={Row}>  
-            <Col>{u.username}</Col>
-            <Col><Form.Check inline type="checkbox" name={u.id} onChange={this.handleGiving} label="" /></Col>
-            <Col><Form.Check inline type="checkbox" name={u.id} onChange={this.handleRecieving} label="" /></Col>
-            </Form.Group>);
+       
+        const items = this.state.users.map((u,index)=> {
+            
+        let result = <Form.Group controlId="formBasicCheckbox" as={Row}>  
+                            <Col>{u.username}</Col>
+                            <Col><Form.Check inline type="checkbox" name={u.id} onChange={(evt) => this.handleGiving(evt,index)} label="" checked={this.state.givingStatus[index] || false}/></Col>
+                            <Col><Form.Check inline type="checkbox" name={u.id} onChange={(evt) => this.handleRecieving(evt,index)} label="" checked={this.state.recievingStatus[index] || false}/></Col>
+                    </Form.Group>;
+        
+        return result;
+     });
         return (
             <Container className="innerContent">
                 <h2>Create New Event</h2>
@@ -120,7 +180,7 @@ class CreateEvent extends React.Component {
                         <Form.Control name="date" type="date" onChange={this.handleDateChange} />
                         </Col>
                     </Form.Group>
-                    <Row><Col>Name</Col><Col>Giving Gifts</Col><Col>Recieving Gifts</Col></Row>
+                    <Row><Col>Name</Col><Col>Giving Gifts <button onClick={this.checkAllGiving}>Select All</button></Col><Col>Recieving Gifts <button onClick={this.checkAllRecieving}>Select All</button></Col></Row>
                     {items}
                     <Button variant="primary" type="submit">
                         Create Event
