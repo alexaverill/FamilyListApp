@@ -26,7 +26,6 @@ class CreateEvent extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleGiving = this.handleGiving.bind(this);
         this.handleRecieving = this.handleRecieving.bind(this);
-        //this.checkAll = this.checkAll.bind(this);
         this.checkAllGiving = this.checkAllGiving.bind(this);
         this.checkAllRecieving = this.checkAllRecieving.bind(this);
     }
@@ -119,15 +118,6 @@ class CreateEvent extends React.Component {
         
         //this.setState({users:userList});
     });
-    }
-    // checkAll(name){
-    //     let checks = document.getElementsByClassName(name+"Check");
-    //     checks.forEach(item=>{
-    //         console.log(item);
-    //     });
-    // }
-    check(){
-        console.log("Test");
     }
     checkAllGiving(){
         // let allGiving = this.state.AllGivingChecked;
