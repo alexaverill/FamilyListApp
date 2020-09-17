@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { GetRequest, PostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
-
+import styles from '../styles/create.event.module.css'
 class CreateEvent extends React.Component {
     
     constructor(props){
@@ -145,7 +145,7 @@ class CreateEvent extends React.Component {
        
         const items = this.state.users.map((u,index)=> {
             
-        let result = <Form.Group controlId="formBasicCheckbox" as={Row}>  
+        let result = <Form.Group controlId="formBasicCheckbox" className={styles.userRow} as={Row}>  
                             <Col>{u.username}</Col>
                             <Col><Form.Check inline type="checkbox" name={u.id} onChange={(evt) => this.handleGiving(evt,index)} label="" checked={this.state.givingStatus[index] || false}/></Col>
                             <Col><Form.Check inline type="checkbox" name={u.id} onChange={(evt) => this.handleRecieving(evt,index)} label="" checked={this.state.recievingStatus[index] || false}/></Col>
@@ -170,7 +170,7 @@ class CreateEvent extends React.Component {
                         <Form.Control name="date" type="date" onChange={this.handleDateChange} />
                         </Col>
                     </Form.Group>
-                    <Row><Col>Name</Col><Col>Giving Gifts <button onClick={this.checkAllGiving}>Select All</button></Col><Col>Recieving Gifts <button onClick={this.checkAllRecieving}>Select All</button></Col></Row>
+                    <Row className={styles.titleRow}><Col>Name</Col><Col>Giving Gifts <button onClick={this.checkAllGiving}>Select All</button></Col><Col>Recieving Gifts <button onClick={this.checkAllRecieving}>Select All</button></Col></Row>
                     {items}
                     <Button variant="primary" type="submit">
                         Create Event
