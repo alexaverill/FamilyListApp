@@ -15,7 +15,7 @@ module.exports = {
      {
       eventName: "Event 1",
       eventDate: new Date(),
-      image: "",
+      image: "event_images/1.jpg",
       comments: "",
       active: 'true',
       createdAt: new Date(),
@@ -24,7 +24,7 @@ module.exports = {
      {
       eventName: "Event 2",
       eventDate: new Date(),
-      image: "",
+      image: "event_images/1.jpg",
       comments: "",
       active: 'true',
       createdAt: new Date(),

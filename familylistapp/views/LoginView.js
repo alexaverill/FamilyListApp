@@ -1,15 +1,12 @@
 
 import React from 'react';
-import ListItem from './ListItem.js';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {login} from './API.js';
-import {startSession,endSession} from './Session.js';
-import { Redirect } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import {startSession,endSession} from '../utils/session';
+//import { Redirect } from 'react-router-dom';
+//import { useHistory } from "react-router-dom";
+import {PostRequest} from "../utils/api";
 class LoginView extends React.Component{
     constructor(props){
         super(props);
@@ -28,16 +25,28 @@ class LoginView extends React.Component{
         this.setState({username:event.target.value});
     }
     handleSubmit(event){
-        login(this.state.username,this.state.password).then(data=>{
+        let data = {
+            username:this.state.username,
+            password:this.state.password
+        }
+        let url = "/api/user/validate"
+        PostRequest(url,data).then((data)=>{
             console.log(data);
-            if(data.authentication.valid){
-                startSession(this.state.username,data.id,data.authKey);
-                this.props.history.push('/');
-            }else{
-                //show error
-                this.setState({loginError:true});
+            if(data.valid){
+                startSession(data.username,data.id,data.token);
             }
+
         });
+        // login(this.state.username,this.state.password).then(data=>{
+        //     console.log(data);
+        //     if(data.authentication.valid){
+        //         startSession(this.state.username,data.id,data.authKey);
+        //         this.props.history.push('/');
+        //     }else{
+        //         //show error
+        //         this.setState({loginError:true});
+        //     }
+        // });
         event.preventDefault();
     }
     render(){

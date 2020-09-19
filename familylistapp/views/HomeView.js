@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import EventCard from '../components/EventCard.js';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {GetRequest} from '../utils/api';
+import {AuthGetRequest} from '../utils/api';
+import {getKey} from '../utils/session';
 class HomeCard{
     constructor(id,date,title){
         this.id = id;
@@ -19,7 +20,13 @@ class HomeView extends React.Component{
     }
     componentDidMount(){
         console.log(process.env.URL);
-        GetRequest("/api/event").then((data)=>{
+        AuthGetRequest("/api/event",getKey()).then((data)=>{
+
+            let keys = Object.keys(data);
+            let idx = keys.indexOf("authorized");
+            if(idx >= 0){
+                return;
+            }
             this.setState({events:data});
         });
     }

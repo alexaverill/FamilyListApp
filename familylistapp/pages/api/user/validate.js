@@ -1,8 +1,11 @@
 const bcrypt = require('bcrypt');
 const model = require("../../../models");
-
+const tokenizer = require("../../../utils/token")
 export default async function (req, res) {
-    let userData = await Users.findAll({
+    let jsonObj = JSON.parse(req.body);
+    let usernameIn= jsonObj.username;
+    let passwordIn = jsonObj.password;
+    let userData = await model.sequelize.models.user.findAll({
         where:{
             username:usernameIn
         },
@@ -28,11 +31,17 @@ export default async function (req, res) {
           }); 
 
     });
-   
-    let returnVal = {
+    let returnVal;
+    if(!result){
+          returnVal= {valid:false};
+    }else{
+   let auth = tokenizer.generateToken(userData[0].username);
+     returnVal = {
         valid:result,
         id:userData[0].id,
-        username:userData[0].username
+        username:userData[0].username,
+        token:auth
+    }
     }
     res.json(returnVal);
     return;
