@@ -9,7 +9,7 @@ class EventCard extends React.Component {
     }
     render() {
         let url = "event/"+this.props.id;
-        let image = "images/"+this.props.image+".jpg";
+        let image = this.props.image;
         return (
             <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={image} />

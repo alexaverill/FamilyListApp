@@ -58,7 +58,7 @@ class EventView extends React.Component {
         let subTitle = <Row><Col><a href={url} className="btn btn-primary">{btnText}</a></Col></Row>;
         
     const lists = this.state.lists.map((list)=> {
-        let claimURL = "/viewList/"+list.id; 
+        let claimURL = "/list/"+list.id; 
         let text = 'View List';
         console.log(list);
         if(list.userId === this.state.userID){

@@ -5,9 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { GetRequest, PostRequest } from '../utils/api.js';
+import { GetRequest, AuthPostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
 import styles from '../styles/create.event.module.css'
+import { getKey } from '../utils/session.js';
 class CreateEvent extends React.Component {
     
     constructor(props){
@@ -49,7 +50,7 @@ class CreateEvent extends React.Component {
             giving:this.state.giving,
             recieving:this.state.recieving
         }
-        PostRequest(url,data).then(data=>{
+        AuthPostRequest(url,data,getKey()).then(data=>{
             if(data.status === false){return;}
             
         });
@@ -119,8 +120,9 @@ class CreateEvent extends React.Component {
         //this.setState({users:userList});
     });
     }
-    checkAllGiving(){
+    checkAllGiving(e){
         // let allGiving = this.state.AllGivingChecked;
+        e.preventDefault()
         this.setState((state, props) => ({
             givingStatus: state.givingStatus.map((val)=>{
                 return !val;
@@ -131,7 +133,8 @@ class CreateEvent extends React.Component {
           }));
 
     }
-    checkAllRecieving(){
+    checkAllRecieving(e){
+        e.preventDefault();
         this.setState((state, props) => ({
             recievingStatus: state.recievingStatus.map((val)=>{
                 return !val;

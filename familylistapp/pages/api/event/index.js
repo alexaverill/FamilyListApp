@@ -1,23 +1,12 @@
 const model = require("../../../models")
-const tokenizer = require("../../../utils/token");
-function createEvent(){
 
-}
-function runMiddleWare(req,res){
-    let token = req.headers.authorization;
-    console.log("TOKEN: "+token);
-    return new Promise((resolve,reject) =>{
-        if(tokenizer.validateToken(token)){
-            return resolve(true);
-        }
-        return resolve(false);
-    })
-}
+import {AuthMiddleware} from '../AuthMiddleware';
+
 export default async function (req, res) {
-    let authorized = await runMiddleWare(req,res);
-    console.log("STATUS "+authorized);
+    let authorized = await AuthMiddleware(req,res);
+    //console.log("STATUS "+authorized);
     if(!authorized){
-        console.log("UNAUTHORIZED");
+       // console.log("UNAUTHORIZED");
         return res.json({authorized:false})
     }
     if(req.method === "POST"){
@@ -27,7 +16,7 @@ export default async function (req, res) {
             eventName:dataObj.name,
             eventDate: dataObj.date,
             comments:dataObj.comments,
-            
+            image:"/event_images/"+(Math.floor(Math.random() * 24)+1)+".jpg"
         }
         let event = await model.sequelize.models.events.create(eventData);
         let give = await event.setGivers(dataObj.giving);

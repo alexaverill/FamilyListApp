@@ -26,7 +26,6 @@ async function PostRequest(url,data){
         return {status:false};
 }
 async function AuthGetRequest(url,token){
-    console.log("TOKEN: "+token);
     const response = await fetch(url,{
         method:'GET',
         headers:{
@@ -43,8 +42,25 @@ async function AuthGetRequest(url,token){
     }
     return {status:false};
 }
+async function AuthPostRequest(url,data,token){
+    const response = await fetch(url,{
+        method:'POST',
+        headers:{
+            'Authorization':token
+        },
+        body:JSON.stringify(data)
+    });
+    if(response === null || response === undefined){
+        return {status:false};
+    }
+    if(response.status == 200){
+        return response.json();
+        }
+        return {status:false};
+}
 module.exports = {
     GetRequest,
     PostRequest,
-    AuthGetRequest
+    AuthGetRequest,
+    AuthPostRequest
 }

@@ -4,10 +4,12 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 //import {addListItem} from './API.js';
+import {AuthPostRequest, PostRequest} from '../utils/api'
+import {getKey} from '../utils/session';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
+        this.state = { id:-1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
         console.log("test");
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -38,18 +40,26 @@ class CreateListItem extends React.Component {
         this.setState({ itemName: event.target.value });
     }
     handleSubmit(event) {
+        event.preventDefault();
         let listItem = {
             name: this.state.itemName,
             url: this.state.url,
             price: this.state.cost,
             isClaimed: false,
-            lists_idlists: this.props.listID,
+            listId: this.props.listID,
             quantity: this.state.quantity,
             comments: this.state.comments
         }
-        //addListItem(this.props.listID,listItem);
-        //add new list item to DB
-        this.setState({ inEdit: false });
+        let url = "/api/listitem";
+        console.log(listItem);
+        AuthPostRequest(url,listItem,getKey()).then((data)=>{
+            console.log(data);
+            if(!data.authorized){
+                //throw authorization error!
+            }
+            this.setState({ inEdit: false,id:data.id });
+        });
+        
     }
     handleCost(event) {
         this.setState({ cost: event.target.value });

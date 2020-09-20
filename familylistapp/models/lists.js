@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      lists.belongsTo(models.models.events)
+      lists.belongsTo(models.models.user);
+      lists.hasMany(models.models.list_item);
     }
   };
   lists.init({

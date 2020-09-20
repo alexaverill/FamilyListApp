@@ -5,11 +5,12 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {GetRequest} from '../utils/api'
+import {GetRequest,AuthPostRequest} from '../utils/api'
 // import CreateListItem from './CreateListItem.js';
 import CreateListItem from '../components/ListItem_Create';
 //import {Link} from "react-router-dom";
 import Link from 'next/link'
+import { getID, getKey } from '../utils/session';
 //import { getID } from './Session.js';
 class CreateListView extends React.Component{
     constructor(props){
@@ -23,6 +24,20 @@ class CreateListView extends React.Component{
         GetRequest(url).then((data)=>{
             this.setState({eventName:data.eventName,eventID:data.id})
         })
+        let createListURL = "/api/lists"
+        AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
+            console.log(data);
+            let list = this.state.listItems;
+            if(data.list_items != undefined && data.list_items.length > 0){
+                let itemArr = data.list_items;
+                itemArr.forEach((item)=>{
+                    list.push(<CreateListItem edit={false} listID={this.state.listID} 
+                        itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
+                });
+            }
+
+            this.setState({listID:data.id});
+        });
         // getEvent(this.props.match.params.id).then(data=>{
             
         //     this.setState({eventName:data.event.eventName,eventID:data.event.id})
@@ -45,6 +60,7 @@ class CreateListView extends React.Component{
         // });
     }
     handleAdd(event){
+        console.log("LIST ID: "+this.state.listID);
         let list = this.state.listItems;
         list.push(<CreateListItem edit={true} listID={this.state.listID}/>);
         this.setState({listItems:list});

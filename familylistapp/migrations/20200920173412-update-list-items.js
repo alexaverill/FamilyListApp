@@ -4,17 +4,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.sequelize.transaction(t => {
       return Promise.all([
-        queryInterface.addColumn('lists', 'eventId', {
+        queryInterface.addColumn('list_items', 'listId', {
           type: Sequelize.DataTypes.INTEGER,
           references:{
-            model:'events',
-            key:'id'
-          }
-        }, { transaction: t }),
-        queryInterface.addColumn('lists', 'userId', {
-          type: Sequelize.DataTypes.INTEGER,
-          references:{
-            model:'users',
+            model:'lists',
             key:'id'
           }
         }, { transaction: t })

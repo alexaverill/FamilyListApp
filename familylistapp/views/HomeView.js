@@ -21,7 +21,7 @@ class HomeView extends React.Component{
     componentDidMount(){
         console.log(process.env.URL);
         AuthGetRequest("/api/event",getKey()).then((data)=>{
-
+            console.log(data);
             let keys = Object.keys(data);
             let idx = keys.indexOf("authorized");
             if(idx >= 0){
