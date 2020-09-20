@@ -9,7 +9,7 @@ import {getKey} from '../utils/session';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id:-1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
+        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
         console.log("test");
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -35,6 +35,13 @@ class CreateListItem extends React.Component {
         if(this.props.url !==undefined){
             this.setState({url:this.props.url});
         }
+        if(this.props.id !== undefined){
+            this.setState({id:this.props.id});
+        }
+        if(this.props.listID !== undefined){
+            console.log("LIST ID: "+this.props.listID);
+            this.setState({listID:this.props.listID})
+        }
     }
     handleNameChange(event) {
         this.setState({ itemName: event.target.value });
@@ -46,12 +53,16 @@ class CreateListItem extends React.Component {
             url: this.state.url,
             price: this.state.cost,
             isClaimed: false,
-            listId: this.props.listID,
+            listId: this.state.listID,
             quantity: this.state.quantity,
             comments: this.state.comments
         }
-        let url = "/api/listitem";
         console.log(listItem);
+        let url = "/api/listitem";
+        if(this.state.id >0){
+            url = "/api/listitem/"+this.state.id;
+            listItem.id = this.state.id;
+        }
         AuthPostRequest(url,listItem,getKey()).then((data)=>{
             console.log(data);
             if(!data.authorized){

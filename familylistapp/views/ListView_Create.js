@@ -27,11 +27,12 @@ class CreateListView extends React.Component{
         let createListURL = "/api/lists"
         AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
             console.log(data);
+            this.setState({listID:data.id});
             let list = this.state.listItems;
             if(data.list_items != undefined && data.list_items.length > 0){
                 let itemArr = data.list_items;
                 itemArr.forEach((item)=>{
-                    list.push(<CreateListItem edit={false} listID={this.state.listID} 
+                    list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} 
                         itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
                 });
             }
