@@ -17,6 +17,24 @@ class CreateListView extends React.Component{
         super(props);
         this.state = {eventName:"",eventID:"",listID:'',listItems:[]};
         this.handleAdd = this.handleAdd.bind(this);
+        this.handleItemDeleted = this.handleItemDeleted.bind(this);
+    }
+    refreshList(){
+        let createListURL = "/api/lists"
+        AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
+            console.log(data);
+            this.setState({listID:data.id});
+            let list = [];//this.state.listItems;
+            if(data.list_items != undefined && data.list_items.length > 0){
+                let itemArr = data.list_items;
+                itemArr.forEach((item)=>{
+                    list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} itemDeleted={this.handleItemDeleted}
+                        itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
+                });
+            }
+
+            this.setState({listItems:list});
+        });
     }
     componentDidMount(){
         console.log(this.props.id); 
@@ -24,21 +42,7 @@ class CreateListView extends React.Component{
         GetRequest(url).then((data)=>{
             this.setState({eventName:data.eventName,eventID:data.id})
         })
-        let createListURL = "/api/lists"
-        AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
-            console.log(data);
-            this.setState({listID:data.id});
-            let list = this.state.listItems;
-            if(data.list_items != undefined && data.list_items.length > 0){
-                let itemArr = data.list_items;
-                itemArr.forEach((item)=>{
-                    list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} 
-                        itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
-                });
-            }
-
-            this.setState({listID:data.id});
-        });
+        this.refreshList();
         // getEvent(this.props.match.params.id).then(data=>{
             
         //     this.setState({eventName:data.event.eventName,eventID:data.event.id})
@@ -60,14 +64,18 @@ class CreateListView extends React.Component{
             
         // });
     }
+    handleItemDeleted(itemID){
+        this.refreshList();
+    }
     handleAdd(event){
         console.log("LIST ID: "+this.state.listID);
         let list = this.state.listItems;
-        list.push(<CreateListItem edit={true} listID={this.state.listID}/>);
+        list.push(<CreateListItem edit={true} listID={this.state.listID} itemDeleted={this.handleItemDeleted}/>);
         this.setState({listItems:list});
     }
     render(){
         let url = "/events/"+this.state.eventID;
+        let items = this.state.listItems;
         return (
             <Container className="innerContent">
                 {/* <Row> <Link href={url}><a>&lt; Return to {this.state.eventName}</a> </Link> </Row> */}
@@ -88,7 +96,7 @@ class CreateListView extends React.Component{
                 
             </Row>
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
-                    {this.state.listItems}
+                    {items}
                 </Row>
                 <Button onClick={this.handleAdd}>Add Item</Button>
             </Container>

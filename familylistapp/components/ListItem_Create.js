@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 //import {addListItem} from './API.js';
-import {AuthPostRequest, PostRequest} from '../utils/api'
+import {AuthPostRequest, PostRequest, AuthDeleteRequest} from '../utils/api'
 import {getKey} from '../utils/session';
 class CreateListItem extends React.Component {
     constructor(props) {
@@ -18,6 +18,7 @@ class CreateListItem extends React.Component {
         this.handleURL = this.handleURL.bind(this);
         this.handleComments = this.handleComments.bind(this);
         this.editCallback = this.editCallback.bind(this);
+        this.deleteCallback = this.deleteCallback.bind(this);
     }
     componentDidMount(){
         if(this.props.itemName !==undefined){
@@ -45,6 +46,12 @@ class CreateListItem extends React.Component {
     }
     handleNameChange(event) {
         this.setState({ itemName: event.target.value });
+    }
+    deleteCallback(){
+            let url = "/api/listitem/"+this.state.id;
+            AuthDeleteRequest(url,getKey()).then((data)=>{
+                this.props.itemDeleted(this.state.id);
+            })
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -129,7 +136,7 @@ class CreateListItem extends React.Component {
         } else {
             return (
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
-                <ListItem name={this.state.itemName} cost={this.state.cost} url ={this.state.url} quantity={this.state.quantity} comments={this.state.comments} edit={true} editCallback={this.editCallback} />
+                <ListItem name={this.state.itemName} cost={this.state.cost} url ={this.state.url} quantity={this.state.quantity} comments={this.state.comments} edit={true} editCallback={this.editCallback} deleteCallback={this.deleteCallback} />
                 </Row>
             );
         }

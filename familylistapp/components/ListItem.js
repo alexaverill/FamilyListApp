@@ -34,8 +34,10 @@ class ListItem extends React.Component {
     }
     render() {
         let button;
+        let deleteBtn;
         if(this.props.edit){
             button = <Button variant="outline-primary" className="claimBtn" onClick={this.props.editCallback}> Edit </Button>
+            deleteBtn = <Button variant="outline-primary" className="claimBtn" onClick={this.props.deleteCallback}> Delete </Button>
         }else{
             if( this.state.claimedBy == getID()){
                 button=<Button variant="outline-primary" className="claimBtn" onClick={this.unclaim}> UnClaim </Button>;
@@ -70,6 +72,7 @@ class ListItem extends React.Component {
                     {this.props.edit}
                     <Col>
                         {button}
+                        { deleteBtn}
                     </Col>
                 </Row>
             </>

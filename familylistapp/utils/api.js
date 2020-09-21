@@ -58,9 +58,26 @@ async function AuthPostRequest(url,data,token){
         }
         return {status:false};
 }
+async function AuthDeleteRequest(url,data,token){
+    const response = await fetch(url,{
+        method:'DELETE',
+        headers:{
+            'Authorization':token
+        },
+        body:JSON.stringify(data)
+    });
+    if(response === null || response === undefined){
+        return {status:false};
+    }
+    if(response.status == 200){
+        return response.json();
+        }
+        return {status:false};
+}
 module.exports = {
     GetRequest,
     PostRequest,
     AuthGetRequest,
-    AuthPostRequest
+    AuthPostRequest,
+    AuthDeleteRequest
 }
