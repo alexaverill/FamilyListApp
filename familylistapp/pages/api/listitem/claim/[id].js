@@ -17,7 +17,7 @@ export default async function (req, res) {
         });
         return res.json(item);
       }
-      let item = model.sequelize.models.list_item.findAll({
+      let item = await model.sequelize.models.list_item.findAll({
         where:{
           id:id
         }

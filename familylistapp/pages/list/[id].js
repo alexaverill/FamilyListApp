@@ -1,7 +1,9 @@
+const { default: ListView } = require("../../views/ListView")
+
 const List = props =>{
     return (
         <>
-        <h1>{props.id}</h1>
+        <ListView id={props.id}/>
         </>
     )
 }

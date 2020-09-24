@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { GetRequest } from '../utils/api';
 //import {getEvent,getEventLists} from './API.js';
-//import { getID } from './Session.js';
+import { getID } from '../utils/session';
 class EventView extends React.Component {
     constructor(props){
         super(props);
@@ -36,12 +36,12 @@ class EventView extends React.Component {
             this.setState({
                 name:data.eventName,
                 date:date.toDateString(),
-                // giving:givers,
+                 //giving:givers,
                 // recieving:recievers, 
                 // isRecieving:rec,
-                //  lists:data.event.lists,
+                  lists:data.lists,
                 // currentListIDs:availableLists,
-                //userID:getID()
+                   userID:getID()
                 });
             
             
