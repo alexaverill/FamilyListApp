@@ -143,7 +143,7 @@ class CreateEvent extends React.Component {
             recievingStatus: state.recievingStatus.map((val)=>{
                 return !val;
             }),
-            giving:state.users.map((usr)=>{
+            recieving:state.users.map((usr)=>{
                 return usr.id;
             })
           }));
