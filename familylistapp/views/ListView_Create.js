@@ -6,12 +6,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {GetRequest,AuthPostRequest} from '../utils/api'
-// import CreateListItem from './CreateListItem.js';
 import CreateListItem from '../components/ListItem_Create';
-//import {Link} from "react-router-dom";
 import Link from 'next/link'
 import { getID, getKey } from '../utils/session';
-//import { getID } from './Session.js';
 class CreateListView extends React.Component{
     constructor(props){
         super(props);

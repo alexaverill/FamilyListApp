@@ -2,19 +2,20 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-//import {getUsername} from './Session'
+import {getUsername} from '../utils/session'
 import Container from 'react-bootstrap/Container';
+
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
         //let name = getUsername();
-        let name = "";
+        let name ="";
         let showLogin = false;
-        // if(name == null || name.length <=0){
-        //     showLogin = true;
-        // }
+        if(name == null || name.length <=0){
+            showLogin = true;
+        }
         return (
             
             <Navbar expand="lg">

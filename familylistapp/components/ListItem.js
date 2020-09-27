@@ -3,7 +3,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 //import {claimItem, unclaimItem, getUser} from './API';
-//import {getID} from './Session';
+import {getID, getKey} from '../utils/session'
+import {AuthGetRequest, AuthPostRequest} from '../utils/api';
 class ListItem extends React.Component {
     constructor(props){
         super(props);
@@ -14,22 +15,35 @@ class ListItem extends React.Component {
     componentDidMount(){
         console.log(this.props.claimedBy);
         if(this.props.claimedBy !== null && this.props.claimedBy !== undefined){
-        getUser(this.props.claimedBy).then(data=>{
+            let userURL = "/api/user/"+this.props.claimedBy;
+        AuthGetRequest(userURL,getKey()).then(data=>{
             console.log(data);
-            this.setState({claimedName:data[0].username});
+            if(data.length >=1){
+                this.setState({claimedName:data[0].username});
+            }
         });
     }
     }
     claim(event){
-        console.log(event);
-        claimItem(this.props.id,getID()).then((data)=>{
+        let url = "/api/listitem/claim/"+this.props.id;
+        let data = {
+            isClaimed:true,
+            claimedBy:getID()
+        }
+        AuthPostRequest(url,data,getKey()).then((data)=>{
             console.log(data);
             this.setState({claimed:true,claimedBy:getID()});
         });
     }
     unclaim(event){
-        unclaimItem(this.props.id,getID()).then(data=>{
-            this.setState({claimed:false,claimedBy:null});
+        let url = "/api/listitem/claim/"+this.props.id;
+        let data = {
+            isClaimed:false,
+            claimedBy:-1
+        }
+        AuthPostRequest(url,data,getKey()).then((data)=>{
+            console.log(data);
+            this.setState({claimed:false,claimedBy:-1});
         });
     }
     render() {

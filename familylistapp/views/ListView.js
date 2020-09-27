@@ -5,18 +5,27 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { AuthGetRequest } from '../utils/api';
 import { getKey } from '../utils/session';
+import { Router } from 'next/router';
 //import {getList,claimItem, getEvent} from './API.js';
-//import {Link} from "react-router-dom";
+import Link from 'next/link'
 class ListView extends React.Component{
     constructor(props){
         super(props);
         this.state = {eventName:'',eventID:-1,list:[],user:''};
     }
     componentDidMount(){
-        let url = "/api/lists//import { Redirect } from 'react-router-dom';
-//import { useHistory } from "react-router-dom";/"+this.props.id;
+        let url = "/api/lists/"+this.props.id;
         AuthGetRequest(url,getKey()).then((data)=>{
             console.log(data);
+            if(!data.authorized){
+                Router.push("/login");
+            }
+            let listData = data.data[0];
+            let name = listData.user.username;
+            let items = listData.list_items;
+            let eventName = listData.event.eventName;
+            let eventID = listData.event.id;
+            this.setState({user:name,list:items, eventName:eventName,eventID:eventID});
         });
         // getList(this.props.match.params.id).then(data=>{
         //     //console.log(data);
@@ -28,12 +37,12 @@ class ListView extends React.Component{
         
     }
     render(){
-        let url = "/events/"+this.state.eventID;
+        let url = "/event/"+this.state.eventID;
         const list = this.state.list.map((Claim)=> 
-            <ListItem id={Claim.id} name={Claim.name} cost={Claim.cost} url={Claim.url} quantity={Claim.quantity} comments={Claim.comments} claimed={Claim.isClaimed} claimedBy={Claim.claimedBy}/>);
+            <ListItem id={Claim.id} name={Claim.name} cost={Claim.price} url={Claim.url} quantity={Claim.quantity} comments={Claim.comments} claimed={Claim.isClaimed} claimedBy={Claim.claimedBy}/>);
         return(
             <Container className="innerContent">
-        {/* <Row> <Link to={url}> &lt; Return to {this.state.eventName}</Link> </Row> */}
+            <Row> <Link href={url}><a> &lt; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>{this.state.user}'s Wishlist</h1></Row>
             <Row className="titleRow">
                 <Col>

@@ -86,13 +86,14 @@ code {
 .navbar-light .navbar-brand{
     color: white;
     font-family: 'Permanent Marker', cursive;
+    font-weight:900;
+    font-size: x-large;
   
 }
 .navbar-light .navbar-nav .nav-link {
   color:white;
+  
 }
-a.navbar-brand:hover{
-  color: #dbe0e0;
-
-
+.navbar-light:hover .navbar-brand:hover {
+  color:#d8dbd5;
 }

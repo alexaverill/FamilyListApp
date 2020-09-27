@@ -1,16 +1,19 @@
-const model = require("../../../models")
+const model = require("../../../../models");
 
 
 export default async function (req, res) {
     const {
         query: { id },
       } = req
+      if(req.method == 'GET'){
+        return res.json({test:"TEST"});
+      }
       if(req.method == 'POST'){
         let itemOBJ = JSON.parse(req.body);
         let item = await model.sequelize.models.list_item.update({
             isClaimed:itemOBJ.isClaimed,
             claimedBy:itemOBJ.claimedBy
-        },,{
+        },{
           where:{
             id:id
           }
