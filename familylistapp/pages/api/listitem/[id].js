@@ -1,10 +1,14 @@
 const model = require("../../../models")
-
+import {AuthMiddleware} from '../AuthMiddleware';
 
 export default async function (req, res) {
     const {
         query: { id },
       } = req
+      let authorized = await AuthMiddleware(req,res);
+      if(!authorized){
+          return res.json({authorized:false})
+      }
       if(req.method == 'POST'){
         let itemOBJ = JSON.parse(req.body);
         let item = await model.sequelize.models.list_item.update(itemOBJ,{
@@ -12,7 +16,11 @@ export default async function (req, res) {
             id:id
           }
         });
-        return res.json(item);
+        let data = {
+          authorized:true,
+          data: item
+        }
+        return res.json(data);
       }else if(req.method == 'DELETE'){
         await model.sequelize.models.list_item.destroy({
           where:{
@@ -25,6 +33,9 @@ export default async function (req, res) {
           id:id
         }
       });
-      return res.json(item);
-      //implement updating!
+      let data = {
+        authorized:true,
+        data: item
+      }
+      return res.json(data);
 }

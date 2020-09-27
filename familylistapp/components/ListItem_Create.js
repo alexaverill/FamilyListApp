@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button';
 //import {addListItem} from './API.js';
 import {AuthPostRequest, PostRequest, AuthDeleteRequest} from '../utils/api'
 import {getKey} from '../utils/session';
+import { Router } from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
-        console.log("test");
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCost = this.handleCost.bind(this);
@@ -73,7 +73,7 @@ class CreateListItem extends React.Component {
         AuthPostRequest(url,listItem,getKey()).then((data)=>{
             console.log(data);
             if(!data.authorized){
-                //throw authorization error!
+                Router.push("/login");
             }
             this.setState({ inEdit: false,id:data.id });
         });

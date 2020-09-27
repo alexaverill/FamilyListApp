@@ -1,12 +1,13 @@
 const model = require("../../../../models");
-
+import {AuthMiddleware} from '../AuthMiddleware';
 
 export default async function (req, res) {
     const {
         query: { id },
       } = req
-      if(req.method == 'GET'){
-        return res.json({test:"TEST"});
+      let authorized = await AuthMiddleware(req,res);
+      if(!authorized){
+          return res.json({authorized:false})
       }
       if(req.method == 'POST'){
         let itemOBJ = JSON.parse(req.body);
@@ -18,13 +19,22 @@ export default async function (req, res) {
             id:id
           }
         });
-        return res.json(item);
+        let data = {
+          authorized:true,
+          data:item
+        }
+        return res.json(data);
       }
+
       let item = await model.sequelize.models.list_item.findAll({
         where:{
           id:id
         }
       });
-      return res.json(item);
+      let data = {
+        authorized:true,
+        data:item
+      }
+      return res.json(data);
       //implement updating!
 }

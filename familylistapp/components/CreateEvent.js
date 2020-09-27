@@ -54,7 +54,7 @@ class CreateEvent extends React.Component {
         AuthPostRequest(url,data,getKey()).then(data=>{
             if(data.status === false){return;}
             console.log(data);
-            let id = data.id;
+            let id = data.data.id;
             let url = "/event/"+id;
             Router.push(url);
         });

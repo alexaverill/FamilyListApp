@@ -3,7 +3,10 @@ const model = require("../../../models")
 import {AuthMiddleware} from '../AuthMiddleware';
 
 export default async function (req, res) {
-
+    let authorized = await AuthMiddleware(req,res);
+    if(!authorized){
+        return res.json({authorized:false})
+    }
     if(req.method === "POST"){
         let dataObj = JSON.parse(req.body);
         console.log(dataObj);

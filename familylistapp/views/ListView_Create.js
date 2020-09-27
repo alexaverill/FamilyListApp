@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {GetRequest,AuthPostRequest} from '../utils/api'
+import {AuthGetRequest,AuthPostRequest} from '../utils/api'
 import CreateListItem from '../components/ListItem_Create';
 import Link from 'next/link'
 import { getID, getKey } from '../utils/session';
@@ -20,10 +20,10 @@ class CreateListView extends React.Component{
         let createListURL = "/api/lists"
         AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
             console.log(data);
-            this.setState({listID:data.id});
+            this.setState({listID:data.data.id});
             let list = [];//this.state.listItems;
-            if(data.list_items != undefined && data.list_items.length > 0){
-                let itemArr = data.list_items;
+            if(data.data.list_items != undefined && data.data.list_items.length > 0){
+                let itemArr = data.data.list_items;
                 itemArr.forEach((item)=>{
                     list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} itemDeleted={this.handleItemDeleted}
                         itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
@@ -36,30 +36,11 @@ class CreateListView extends React.Component{
     componentDidMount(){
         console.log(this.props.id); 
         let url = "/api/event/"+this.props.id;
-        GetRequest(url).then((data)=>{
-            this.setState({eventName:data.eventName,eventID:data.id})
+        AuthGetRequest(url,getKey()).then((data)=>{
+            this.setState({eventName:data.data.eventName,eventID:data.data.id})
         })
         this.refreshList();
-        // getEvent(this.props.match.params.id).then(data=>{
-            
-        //     this.setState({eventName:data.event.eventName,eventID:data.event.id})
 
-        // });
-        // createList(this.props.match.params.id,this.state.eventName,getID()).then(data=>{
-        //     console.log(data.id);
-        //     this.setState({listID:data.id})
-        //     let list = this.state.listItems;
-        //     if(data.list != undefined && data.list.length>0){
-        //         let listItems = data.list[0].list_items;
-        //         for(let x=0; x<listItems.length; x++){
-        //             let i = listItems[x];
-        //              list.push(<CreateListItem edit={false} listID={this.state.listID} itemName={i.name} cost={i.cost} quantity={i.quantity} url={i.url} comments={i.comments}/>);
-        //         }
-                
-        //     }
-        //     this.setState({listItems:list});
-            
-        // });
     }
     handleItemDeleted(itemID){
         this.refreshList();

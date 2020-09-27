@@ -19,8 +19,11 @@ export default async function (req, res) {
             include:["list_items"]
 
         });
-        console.log(list);
-        return res.json(list);
+        let data = {
+            authorized:true,
+            data:list
+        }
+        return res.json(data);
 
     }
     res.json({});

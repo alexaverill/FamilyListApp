@@ -13,7 +13,7 @@ class ListItem extends React.Component {
         this.unclaim = this.unclaim.bind(this);
     }
     componentDidMount(){
-        console.log(this.props.claimedBy);
+       
         if(this.props.claimedBy !== null && this.props.claimedBy !== undefined){
             let userURL = "/api/user/"+this.props.claimedBy;
         AuthGetRequest(userURL,getKey()).then(data=>{
