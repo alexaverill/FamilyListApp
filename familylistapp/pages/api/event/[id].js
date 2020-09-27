@@ -1,12 +1,14 @@
 const model = require("../../../models")
-
+import {AuthMiddleware} from '../AuthMiddleware';
 
 export default async function (req, res) {
     const {
         query: { id },
       } = req
-    console.log("Event Associations: ");
-    console.log(model.sequelize.models.events.associations);
+      let authorized = await AuthMiddleware(req,res);
+      if(!authorized){
+          return res.json({authorized:false})
+      }
     let EventJson = await model.sequelize.models.events.findOne({
         where:{
             id:id
@@ -37,7 +39,9 @@ export default async function (req, res) {
         ]
 
     });
-    //console.log(model.sequelize.models.events);
-   //sole.log(EventJson);
-    res.json(EventJson);
+    let data={
+        authorized:true,
+        data:EventJson
+    }
+    res.json(data);
 }

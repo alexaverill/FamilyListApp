@@ -23,13 +23,11 @@ class HomeView extends React.Component{
         console.log(process.env.URL);
         AuthGetRequest("/api/event",getKey()).then((data)=>{
             console.log(data);
-            let keys = Object.keys(data);
-            let idx = keys.indexOf("authorized");
-            if(idx >= 0){
+            if(!data.authorized){
                 Router.push('/login');
                 return;
             }
-            this.setState({events:data});
+            this.setState({events:data.data});
         });
     }
 

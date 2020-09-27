@@ -3,12 +3,7 @@ const model = require("../../../models")
 import {AuthMiddleware} from '../AuthMiddleware';
 
 export default async function (req, res) {
-    let authorized = await AuthMiddleware(req,res);
-    //console.log("STATUS "+authorized);
-    if(!authorized){
-       // console.log("UNAUTHORIZED");
-        return res.json({authorized:false})
-    }
+
     if(req.method === "POST"){
         let dataObj = JSON.parse(req.body);
         console.log(dataObj);
@@ -21,9 +16,14 @@ export default async function (req, res) {
         let event = await model.sequelize.models.events.create(eventData);
         let give = await event.setGivers(dataObj.giving);
         let recieve = await event.setRecievers(dataObj.recieving)
-        return res.json(event);
+        let data = {
+            authorized:true,
+            data:event
+        }
+        return res.json(data);
     }
-    console.log(model.sequelize.models.events.associations);
+    
+    let dateTime = Date.now();
     let EventJson = await model.sequelize.models.events.findAll(
         {
             attributes: ['id', 'eventName', 'eventDate','image'],
@@ -33,6 +33,9 @@ export default async function (req, res) {
         
     );
     //console.log(model.sequelize.models.events);
-    console.log(EventJson);
-    res.json(EventJson);
+    let data = {
+        authorized:true,
+        data:EventJson
+    }
+    res.json(data);
 }
