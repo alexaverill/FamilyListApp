@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import {AuthGetRequest} from '../utils/api';
 import {getKey} from '../utils/session';
+import Router from 'next/router';
 class HomeCard{
     constructor(id,date,title){
         this.id = id;
@@ -25,6 +26,7 @@ class HomeView extends React.Component{
             let keys = Object.keys(data);
             let idx = keys.indexOf("authorized");
             if(idx >= 0){
+                Router.push('/login');
                 return;
             }
             this.setState({events:data});

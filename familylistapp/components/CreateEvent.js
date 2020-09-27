@@ -9,6 +9,7 @@ import { GetRequest, AuthPostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
 import styles from '../styles/create.event.module.css'
 import { getKey } from '../utils/session.js';
+import Router from 'next/router';
 class CreateEvent extends React.Component {
     
     constructor(props){
@@ -52,7 +53,10 @@ class CreateEvent extends React.Component {
         }
         AuthPostRequest(url,data,getKey()).then(data=>{
             if(data.status === false){return;}
-            
+            console.log(data);
+            let id = data.id;
+            let url = "/event/"+id;
+            Router.push(url);
         });
         // createEvent(this.state.name,this.state.date,this.state.comments,this.state.giving,this.state.recieving).then(data=>{
         //     if(data.status ==="true"){

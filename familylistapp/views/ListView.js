@@ -13,7 +13,8 @@ class ListView extends React.Component{
         this.state = {eventName:'',eventID:-1,list:[],user:''};
     }
     componentDidMount(){
-        let url = "/api/lists/"+this.props.id;
+        let url = "/api/lists//import { Redirect } from 'react-router-dom';
+//import { useHistory } from "react-router-dom";/"+this.props.id;
         AuthGetRequest(url,getKey()).then((data)=>{
             console.log(data);
         });

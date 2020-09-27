@@ -4,8 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {startSession,endSession} from '../utils/session';
-//import { Redirect } from 'react-router-dom';
-//import { useHistory } from "react-router-dom";
+import Router from 'next/router';
 import {PostRequest} from "../utils/api";
 class LoginView extends React.Component{
     constructor(props){
@@ -34,6 +33,7 @@ class LoginView extends React.Component{
             console.log(data);
             if(data.valid){
                 startSession(data.username,data.id,data.token);
+                Router.push("/");
             }
 
         });
