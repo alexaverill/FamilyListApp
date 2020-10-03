@@ -2,12 +2,13 @@ const model = require("../../../models")
 const nodemailer = require("nodemailer");
 import {AuthMiddleware} from '../AuthMiddleware';
 async function sendEmail(to,subject,message){
+    console.log(process.env.EMAIL_HOST)
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: process.env.EMAIL_HOST,
         port: 587,
         auth: {
-            user: 'alford60@ethereal.email',
-            pass: 'Mbrv5dJ1EfDYrADsbT'
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PW
         }
     });
     let email = await transporter.sendMail({
