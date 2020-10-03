@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { AuthGetRequest } from '../utils/api';
+import { AuthGetRequest, AuthPostRequest } from '../utils/api';
 //import {getEvent,getEventLists} from './API.js';
 import { getID, getKey } from '../utils/session';
 import Router from 'next/router';
@@ -20,8 +20,11 @@ class EventView extends React.Component {
             isRecieving:true,
             lists:[],
             currentListIDs:[],
-            userID:-1
+            userID:-1,
+            host:this.props.host
         };
+        
+        this.sendReminder = this.sendReminder.bind(this);
     }
     componentDidMount(){
         let url = "/api/event/"+this.props.id;
@@ -50,6 +53,19 @@ class EventView extends React.Component {
             
             
         })
+    }
+    sendReminder(){
+        console.log("HOST: "+this.state.host);
+        let url = "/api/email";
+        let sub = `${this.state.name} Reminder`
+        let msg = `This is a reminder that the event: ${this.state.name} has been created for ${this.state.date}. 
+        Lists can be viewed: <a href="${this.state.host}/event/${this.state.id}">${this.state.host}/event/${this.state.id}</a>`;
+        let data = {
+            to:["alford60@ethereal.email"],
+            message:msg,
+            subject:sub
+        }
+        AuthPostRequest(url,data,getKey());
     }
     render(){
         let title = this.state.name;
@@ -83,6 +99,7 @@ class EventView extends React.Component {
                 <div className="header-btn">{this.state.isRecieving &&
                 subTitle
             }</div>
+            <div className ="header-btn"><Button onClick={this.sendReminder}>Send Event Reminder</Button></div>
             </div>
         
             

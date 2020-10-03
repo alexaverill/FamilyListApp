@@ -5,7 +5,7 @@ import Navigation from '../components/Navigation';
 import Container from 'react-bootstrap/Container';
 import Head from 'next/head'
 function MyApp({ Component, pageProps }) {
-  
+  console.log(process.env.URL);
   return <>
   <Navigation/>
   <Container>
