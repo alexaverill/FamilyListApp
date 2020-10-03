@@ -9,7 +9,8 @@ const List = props =>{
 }
 List.getInitialProps = ({query})=>{
     return {
-        id: query.id
+        id: query.id,
+        host:process.env.URL
     }
 }
 

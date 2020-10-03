@@ -8,13 +8,14 @@ import Button from 'react-bootstrap/Button';
 import {AuthGetRequest,AuthPostRequest} from '../utils/api'
 import CreateListItem from '../components/ListItem_Create';
 import Link from 'next/link'
-import { getID, getKey } from '../utils/session';
+import { getID, getKey, getUsername } from '../utils/session';
 class CreateListView extends React.Component{
     constructor(props){
         super(props);
-        this.state = {eventName:"",eventID:"",listID:'',listItems:[]};
+        this.state = {eventName:"",eventID:"",listID:'',listItems:[],host:this.props.host};
         this.handleAdd = this.handleAdd.bind(this);
         this.handleItemDeleted = this.handleItemDeleted.bind(this);
+        this.sendReminder = this.sendReminder.bind(this);
     }
     refreshList(){
         let createListURL = "/api/lists"
@@ -51,6 +52,19 @@ class CreateListView extends React.Component{
         list.push(<CreateListItem edit={true} listID={this.state.listID} itemDeleted={this.handleItemDeleted}/>);
         this.setState({listItems:list});
     }
+    sendReminder(){
+       
+        let url = "/api/email";
+        let sub = `${this.state.eventName} - ${getUsername()}'s list`
+        let msg = `${getUsername()} has created a list for ${this.state.eventName}!.
+        This list can be can be viewed: <a href="${this.state.host}/list/${this.state.listID}">${this.state.host}/list/${this.state.listID}</a>`;
+        let data = {
+            to:["alford60@ethereal.email"],
+            message:msg,
+            subject:sub
+        }
+        AuthPostRequest(url,data,getKey());
+    }
     render(){
         let url = "/events/"+this.state.eventID;
         let items = this.state.listItems;
@@ -59,6 +73,7 @@ class CreateListView extends React.Component{
             <Container className="innerContent">
                  {/* <Row> <Link href={url}><a>&lt; Return to {this.state.eventName}</a> </Link> </Row>  */}
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
+                <Row><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
                 <Row className="titleRow">
                 <Col>
                     Item
