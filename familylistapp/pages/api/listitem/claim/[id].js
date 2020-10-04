@@ -1,5 +1,5 @@
 const model = require("../../../../models");
-import {AuthMiddleware} from '../AuthMiddleware';
+import {AuthMiddleware} from '../../AuthMiddleware';
 
 export default async function (req, res) {
     const {
