@@ -61,7 +61,7 @@ class EventView extends React.Component {
         let msg = `This is a reminder that the event: ${this.state.name} has been created for ${this.state.date}. 
         Lists can be viewed: <a href="${this.state.host}/event/${this.state.id}">${this.state.host}/event/${this.state.id}</a>`;
         let data = {
-            to:["alford60@ethereal.email"],
+            eventID:this.state.id,
             message:msg,
             subject:sub
         }

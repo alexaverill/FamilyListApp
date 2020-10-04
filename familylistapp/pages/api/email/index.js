@@ -5,15 +5,16 @@ async function sendEmail(to,subject,message){
     console.log(process.env.EMAIL_HOST)
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
-        port: 587,
+        port: 465,
+        secure:true,
         auth: {
             user: process.env.EMAIL,
             pass: process.env.EMAIL_PW
         }
     });
     let email = await transporter.sendMail({
-        from:'"Testing mcTester"<test@mctester.com>',
-        to:to,
+        from:'"Family List App"<no-reply@familylistapp.com>',
+        to:'',
         bcc:to,
         subject:subject,
         html:message,
@@ -29,13 +30,25 @@ export default async function (req, res) {
     }
     if(req.method === "POST"){
         let postObj = JSON.parse(req.body);
-        let body = postObj["message"];
-        if(body.indexOf("$$")>0){
-            body.replace("$$",);
-        }
-        let to = postObj["to"];
-        let subject = postObj["subject"];
-        sendEmail(to,subject,body);
+        let keys = Object.keys(postObj);
+            let body = postObj["message"];
+            let eventData = await model.sequelize.models.events.findOne({
+                where:{
+                    id:postObj["eventID"]
+                },
+                include:[{
+                    model:model.sequelize.models.user,
+                    as:'Givers',
+                    attributes:['email']
+                    
+                }
+                ]
+        
+            });
+            let to = emailTo;
+            let subject = postObj["subject"];
+            //sendEmail(to,subject,body);
+        
     }
 
     res.json({});
