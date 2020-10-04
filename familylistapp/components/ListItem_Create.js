@@ -50,7 +50,9 @@ class CreateListItem extends React.Component {
     deleteCallback(){
             let url = "/api/listitem/"+this.state.id;
             AuthDeleteRequest(url,getKey()).then((data)=>{
+                console.log(data);
                 this.props.itemDeleted(this.state.id);
+
             })
     }
     handleSubmit(event) {
@@ -61,7 +63,7 @@ class CreateListItem extends React.Component {
             price: this.state.cost,
             isClaimed: false,
             listId: this.state.listID,
-            quantity: this.state.quantity,
+            quantity: 1,
             comments: this.state.comments
         }
         console.log(listItem);
@@ -108,10 +110,6 @@ class CreateListItem extends React.Component {
                             <Form.Group controlId="cost" className="form-group-right-spacing"  sm="1" >
                                 <Form.Label >Cost:</Form.Label>
                                 <Form.Control name="cost" type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
-                            </Form.Group>
-                            <Form.Group controlId="quantity" className="form-group-right-spacing" md="1">
-                                <Form.Label>Quantity:</Form.Label>
-                                <Form.Control name="quantity" type="number" min="1" step="1" value={this.state.quantity}  onChange={this.handleQuantity} />
                             </Form.Group>
                         </Form.Row>
 

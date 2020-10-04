@@ -9,6 +9,7 @@ import {AuthGetRequest,AuthPostRequest} from '../utils/api'
 import CreateListItem from '../components/ListItem_Create';
 import Link from 'next/link'
 import { getID, getKey, getUsername } from '../utils/session';
+import Router from 'next/router';
 class CreateListView extends React.Component{
     constructor(props){
         super(props);
@@ -21,6 +22,10 @@ class CreateListView extends React.Component{
         let createListURL = "/api/lists"
         AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
             console.log(data);
+            if(!data.authorized){
+                Router.push('/login');
+                return;
+            }
             this.setState({listID:data.data.id});
             let list = [];//this.state.listItems;
             if(data.data.list_items != undefined && data.data.list_items.length > 0){
@@ -38,6 +43,10 @@ class CreateListView extends React.Component{
         console.log(this.props.id); 
         let url = "/api/event/"+this.props.id;
         AuthGetRequest(url,getKey()).then((data)=>{
+            if(!data.authorized){
+                Router.push('/login');
+                return;
+            }
             this.setState({eventName:data.data.eventName,eventID:data.data.id})
         })
         this.refreshList();
@@ -75,24 +84,24 @@ class CreateListView extends React.Component{
                  {/* <Row> <Link href={url}><a>&lt; Return to {this.state.eventName}</a> </Link> </Row>  */}
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
                 <Row><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
-                <Row className="titleRow">
-                <Col>
+                {/* <Row className="titleRow">
+                <Col >
                     Item
                 </Col>
                 <Col>
                     Cost
                 </Col>
-                <Col>
-                    Quantity
-                </Col>
+                
                 <Col>
                     Comments
                 </Col>
-                
-            </Row>
+                <Col></Col>
+            </Row> */}
+            <Col className="item-row">
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
                     {items}
                 </Row>
+                </Col>
                 <Button onClick={this.handleAdd}>Add Item</Button>
             </Container>
 

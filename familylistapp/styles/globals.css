@@ -37,6 +37,9 @@ code {
   align-items: center;
   display: flex;
 }
+.item-row{
+  margin:5% 0 2.5% 0;
+}
 .innerContent{
     margin-top: 4%;
     padding: 2%;
@@ -97,3 +100,22 @@ code {
 .navbar-light:hover .navbar-brand:hover {
   color:#d8dbd5;
 }
+@media (max-width: 800px) { 
+  .col, .col-md-auto{
+    margin:2% 0 1.5% 0;
+  }
+  .row{
+    width:100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .fullWidth{
+    width:100%;
+  }
+  .header-btn{
+    width:100%;
+  }
+  .fullWidthBtn {
+    width:100%;
+  }
+ }

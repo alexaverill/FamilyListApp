@@ -44,24 +44,24 @@ class ListView extends React.Component{
             <Container className="innerContent">
             <Row> <Link href={url}><a> &lt; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>{this.state.user}'s Wishlist</h1></Row>
-            <Row className="titleRow">
+            {/* <Row className="titleRow">
                 <Col>
                     Item
                 </Col>
-                <Col>
+                <Col className="d-none d-sm-block">
                     Cost
                 </Col>
-                <Col>
+                <Col className="d-none d-sm-block">
                     Quantity
                 </Col>
-                <Col>
+                <Col className="d-none d-sm-block">
                     Comments
                 </Col>
                 
                 <Col>
                     
                 </Col>
-            </Row>
+            </Row> */}
             {list}
             </Container>
         );

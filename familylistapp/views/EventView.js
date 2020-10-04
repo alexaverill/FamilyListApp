@@ -75,7 +75,7 @@ class EventView extends React.Component {
         if(this.state.currentListIDs.indexOf(this.state.userID)>=0){
             btnText = "Edit Your List"
         }
-        let subTitle = <Row><Col><a href={url} className="btn btn-primary">{btnText}</a></Col></Row>;
+        let subTitle = <Row><a href={url} className="header-btn btn btn-primary fullWidthBtn">{btnText}</a></Row>;
         
     const lists = this.state.lists.map((list)=> {
         let claimURL = "/list/"+list.id; 
@@ -85,8 +85,8 @@ class EventView extends React.Component {
             claimURL = url;
             text = 'Edit List';
         }
-        return <Row xs={3} md={3} lg={3} className="listRow  justify-content-md-center"><Col>{list.user.username}</Col><Col>{list.list_items.length} Items</Col>
-        <Col><a href={claimURL} className="btn btn-primary">{text}</a></Col></Row>
+        return <Row className="listRow "><Col md="auto" lg="4">{list.user.username}</Col><Col  md="auto" lg="4">{list.list_items.length} Items</Col>
+        <Row><Col><a href={claimURL} className="btn btn-primary fullWidth">{text}</a></Col></Row></Row>
         
     });
         return(
@@ -96,10 +96,10 @@ class EventView extends React.Component {
                     <h2>{title}</h2>
                 </div>
                 <div className="header-date">{date}</div>
-                <div className="header-btn">{this.state.isRecieving &&
-                subTitle
-            }</div>
-            <div className ="header-btn"><Button onClick={this.sendReminder}>Send Event Reminder</Button></div>
+                <Row>
+                {this.state.isRecieving && subTitle}
+                <Button onClick={this.sendReminder} className=" header-btn fullWidthBtn"> Send Event Reminder</Button>
+                </Row>
             </div>
         
             
