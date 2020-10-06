@@ -75,7 +75,7 @@ class EventView extends React.Component {
         if(this.state.currentListIDs.indexOf(this.state.userID)>=0){
             btnText = "Edit Your List"
         }
-        let subTitle = <Row><a href={url} className="header-btn btn btn-primary fullWidthBtn">{btnText}</a></Row>;
+        let subTitle =<a href={url} className="header-btn btn btn-primary fullWidthBtn">{btnText}</a>;
         
     const lists = this.state.lists.map((list)=> {
         let claimURL = "/list/"+list.id; 
@@ -85,8 +85,12 @@ class EventView extends React.Component {
             claimURL = url;
             text = 'Edit List';
         }
-        return <Row className="listRow "><Col md="auto" lg="4">{list.user.username}</Col><Col  md="auto" lg="4">{list.list_items.length} Items</Col>
-        <Row><Col><a href={claimURL} className="btn btn-primary fullWidth">{text}</a></Col></Row></Row>
+        return <Row className="listRow ">
+            <Col sm="4" md="10" lg="10"><div className="userName">{list.user.username}</div></Col>
+            <Row>
+                <Col><a href={claimURL} className="btn btn-primary fullWidthBtn">{text}</a></Col>
+            </Row>
+        </Row>
         
     });
         return(
@@ -96,14 +100,18 @@ class EventView extends React.Component {
                     <h2>{title}</h2>
                 </div>
                 <div className="header-date">{date}</div>
-                <Row>
-                {this.state.isRecieving && subTitle}
-                <Button onClick={this.sendReminder} className=" header-btn fullWidthBtn"> Send Event Reminder</Button>
+                <Row className="headerRow">
+                    <Col sm={8} className="headerCol">
+                    {this.state.isRecieving && subTitle}
+                </Col>
+                <Col sm={8} className="headerCol">
+                <Button onClick={this.sendReminder} className="btn btn-secondary header-btn fullWidthBtn"> Send Reminder</Button>
+                </Col>
                 </Row>
             </div>
         
             
-            <Row className="table-header justify-content-md-center"><Col>Name</Col><Col>Amount</Col><Col></Col></Row>
+            
             {lists}
             </Container>
         )

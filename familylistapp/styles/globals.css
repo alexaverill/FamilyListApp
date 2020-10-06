@@ -100,6 +100,28 @@ code {
 .navbar-light:hover .navbar-brand:hover {
   color:#d8dbd5;
 }
+.claimText{
+  font-weight: 900;
+  margin:1.5% 0 1.5% 0;
+}
+.userName{
+  font-size: 1.5em;
+font-weight: 600;
+text-align: left;
+}
+.headerRow{
+  justify-content: center;;
+}
+.headerCol{
+  width:100%;
+}
+.fullWidthBtn {
+  width:100%;
+}
+.backlink{
+  font-size:1.25em;
+  font-weight: 500;
+}
 @media (max-width: 800px) { 
   .col, .col-md-auto{
     margin:2% 0 1.5% 0;
@@ -115,7 +137,5 @@ code {
   .header-btn{
     width:100%;
   }
-  .fullWidthBtn {
-    width:100%;
-  }
+
  }

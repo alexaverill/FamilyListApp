@@ -56,7 +56,7 @@ class ListItem extends React.Component {
             if( this.state.claimedBy == getID()){
                 button=<Button variant="outline-primary" className="claimBtn" onClick={this.unclaim}> UnClaim </Button>;
             }else if(this.state.claimed ){
-                button=`Claimed By:${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
+                button=`Claimed by:${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
             }else{
                 button = <Button variant="primary" className="claimBtn" onClick={this.claim}> Claim </Button>
             }
@@ -75,18 +75,19 @@ class ListItem extends React.Component {
         return (
             <>
                 <Row className="listRow" >
-                    <Col>
+                    <Col md="3" lg="4">
                         {name}
                     </Col>
-                    <Col md="auto" lg="4">
+                    <Col md="2" lg="2">
                         ${this.props.cost}
                     </Col>
-                    <Col md="auto" lg="4">
+                    <Col md="4" lg="4">
                         {this.props.comments}
                     </Col>
                 
                     {this.props.edit}
-                    <Row><Col md="auto">
+                    <Row>
+                        <Col md="auto">
                         {button}
                         
                     </Col>

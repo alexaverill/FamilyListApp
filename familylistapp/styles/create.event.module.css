@@ -1,5 +1,14 @@
 .titleRow{
     padding-bottom: .5%;
+    font-weight: 500;
+    font-size:1.2em;
+}
+.titleCol{
+    /*justify-content: space-between;*/
+    width: 100%;
+}
+.checkTitle{
+    margin-left: 10%;
 }
 .userRow{
     border-bottom: .5px solid lightgray;
