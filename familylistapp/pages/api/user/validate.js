@@ -11,7 +11,8 @@ export default async function (req, res) {
         },
         attributes:['id','username','password']
     })
-    if(userData == null || userData == undefined){
+    console.log(userData);
+    if(userData == null || userData == undefined || userData.length <=0){
         res.json({valid:false});
         return;
     }
