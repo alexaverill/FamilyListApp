@@ -1,0 +1,16 @@
+version: '3'
+services:
+    db:
+        image: postgres
+        env_file:
+            - database.env
+        volumes:
+            - database-data:/var/lib/postgressql/data
+        ports:
+            - "5432:5432"
+    web:
+        image: aaverill/family-list-app:1.0
+        ports:
+            - "8989:3000"
+volumes:
+    database-data:
