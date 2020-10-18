@@ -4,7 +4,8 @@ const model = require("../../../models")
 export default async function (req, res) {
     let Users = await model.sequelize.models.user.findAll(
         {
-            attributes: ['id', 'username',"email"]
+            attributes: ['id', 'username',"email"],
+            order:[["id","ASC"]]
         }
     );
     //console.log(model.sequelize.models.events);

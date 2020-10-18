@@ -21,7 +21,9 @@ class ListView extends React.Component{
       
         return(
             <Container className="innerContent">
+                <h2>Users</h2>
                 <UserTable/>
+                <h2>Settings</h2>
             </Container>
         );
     }
