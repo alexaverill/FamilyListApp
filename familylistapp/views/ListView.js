@@ -39,30 +39,16 @@ class ListView extends React.Component{
     render(){
         let url = "/event/"+this.state.eventID;
         const list = this.state.list.map((Claim)=> 
-            <ListItem id={Claim.id} name={Claim.name} cost={Claim.price} url={Claim.url} quantity={Claim.quantity} comments={Claim.comments} claimed={Claim.isClaimed} claimedBy={Claim.claimedBy}/>);
+            <ListItem id={Claim.id} name={Claim.name} 
+                    cost={Claim.price} url={Claim.url} 
+                    quantity={Claim.quantity} comments={Claim.comments} 
+                    claimed={Claim.isClaimed} claimedBy={Claim.claimedBy}/>);
         return(
             <Container className="innerContent">
             <Row> <Link href={url}>
                 <a className="backlink"> &lt; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>{this.state.user}'s Wishlist</h1></Row>
-            {/* <Row className="titleRow">
-                <Col>
-                    Item
-                </Col>
-                <Col className="d-none d-sm-block">
-                    Cost
-                </Col>
-                <Col className="d-none d-sm-block">
-                    Quantity
-                </Col>
-                <Col className="d-none d-sm-block">
-                    Comments
-                </Col>
-                
-                <Col>
-                    
-                </Col>
-            </Row> */}
+           
             {list}
             </Container>
         );

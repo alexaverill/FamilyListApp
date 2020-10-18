@@ -76,32 +76,18 @@ class CreateListView extends React.Component{
         AuthPostRequest(url,data,getKey());
     }
     render(){
-        let url = "/events/"+this.state.eventID;
+        let url = "/event/"+this.state.eventID;
         let items = this.state.listItems;
 
         return (
             <Container className="innerContent">
-                 {/* <Row> <Link href={url}><a>&lt; Return to {this.state.eventName}</a> </Link> </Row>  */}
+                            <Row> <Link href={url}>
+                <a className="backlink"> &lt; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
                 <Row><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
-                {/* <Row className="titleRow">
-                <Col >
-                    Item
-                </Col>
-                <Col>
-                    Cost
-                </Col>
-                
-                <Col>
-                    Comments
-                </Col>
-                <Col></Col>
-            </Row> */}
-            <Col className="item-row">
-                <Row lg={1} md={1} sm={1} xl={1} xs={1}>
+            <div className="item-row">
                     {items}
-                </Row>
-                </Col>
+            </div>
                 <Button onClick={this.handleAdd}>Add Item</Button>
             </Container>
 
