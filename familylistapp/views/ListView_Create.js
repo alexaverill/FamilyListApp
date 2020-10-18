@@ -84,7 +84,7 @@ class CreateListView extends React.Component{
                             <Row> <Link href={url}>
                 <a className="backlink"> &lt; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
-                <Row><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
+                <Row className="headerRow"><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
             <div className="item-row">
                     {items}
             </div>

@@ -13,7 +13,8 @@ class UserTable extends React.Component{
         //{this.props.date.toDateString()}
         this.state = {users:["1S"]}
         this.handleChangedName = this.handleChangedName.bind(this);
-        this.handleNameUpdate = this.handleNameUpdate.bind(this);
+        this.handleUserUpdate = this.handleUserUpdate.bind(this);
+        this.handleChangedEmail = this.handleChangedEmail.bind(this);
     }
     componentDidMount(){
         let url = "/api/user"
@@ -22,7 +23,7 @@ class UserTable extends React.Component{
             this.setState({users:data})
         })
     }
-    handleNameUpdate(e,id){
+    handleUserUpdate(e,id){
         let userObj;
         let users = this.state.users;
         users.forEach((u)=>{
@@ -40,8 +41,18 @@ class UserTable extends React.Component{
         let users = this.state.users;
         users.forEach((u)=>{
             if(u.id === id){
-                console.log("FOUND "+u)
+                
                 u.username = event.target.value;
+            }
+        });
+        this.setState({users:users});
+    }
+    handleChangedEmail(event,id){
+        let users = this.state.users;
+        users.forEach((u)=>{
+            if(u.id === id){
+                
+                u.email = event.target.value;
             }
         });
         this.setState({users:users});
@@ -52,8 +63,10 @@ class UserTable extends React.Component{
            
             <td><EditableInput text={user.username} id={user.id}
                          onChangeHandle={this.handleChangedName}
-                         onFinish = {this.handleNameUpdate}/></td>
-            <td>{user.email}</td>
+                         onFinish = {this.handleUserUpdate}/></td>
+            <td><EditableInput text={user.email} id={user.id}
+                         onChangeHandle={this.handleChangedEmail}
+                         onFinish = {this.handleUserUpdate}/></td>
             <td><Button>Reset</Button></td>
           </tr>;
         })
