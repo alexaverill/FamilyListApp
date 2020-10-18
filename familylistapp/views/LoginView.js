@@ -51,7 +51,7 @@ class LoginView extends React.Component{
     }
     render(){
         return(
-            <Container class="innerContainer">
+            <Container className="innerContainer">
                  <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle">
                         <Form.Label>Name</Form.Label>

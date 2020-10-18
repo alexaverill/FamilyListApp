@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import {AuthGetRequest, AuthPostRequest} from '../utils/api';
 import { getKey } from '../utils/session';
 import EditableInput from './EditableInput'
+import ResetPassword from './ResetPassword';
 class UserTable extends React.Component{
     
     constructor(props){
@@ -15,6 +16,7 @@ class UserTable extends React.Component{
         this.handleChangedName = this.handleChangedName.bind(this);
         this.handleUserUpdate = this.handleUserUpdate.bind(this);
         this.handleChangedEmail = this.handleChangedEmail.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
     }
     componentDidMount(){
         let url = "/api/user"
@@ -31,6 +33,9 @@ class UserTable extends React.Component{
                 userObj = u;
             }
         });
+        if("password" in userObj && userObj.password.length <=1){
+            delete userObj["password"];
+        }
         let url = "/api/user/"+id;
         console.log(getKey());
         AuthPostRequest(url,userObj,getKey()).then((data)=>{
@@ -55,6 +60,17 @@ class UserTable extends React.Component{
                 u.email = event.target.value;
             }
         });
+        console.log(users);
+        this.setState({users:users});
+    }
+    handleChangePassword(event, id){
+        let users = this.state.users;
+        users.forEach((u)=>{
+            if(u.id === id){
+                
+                u.password = event.target.value;
+            }
+        });
         this.setState({users:users});
     }
     render() {
@@ -67,7 +83,8 @@ class UserTable extends React.Component{
             <td><EditableInput text={user.email} id={user.id}
                          onChangeHandle={this.handleChangedEmail}
                          onFinish = {this.handleUserUpdate}/></td>
-            <td><Button>Reset</Button></td>
+            <td><ResetPassword text={user.password} id={user.id} onChangeHandle={this.handleChangePassword}
+                                onFinish={this.handleUserUpdate}/></td>
           </tr>;
         })
         return (
