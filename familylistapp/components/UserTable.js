@@ -93,7 +93,7 @@ class UserTable extends React.Component{
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Reset Password</th>
+      <th>Manage</th>
     </tr>
   </thead>
   <tbody>

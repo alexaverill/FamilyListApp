@@ -52,7 +52,7 @@ class CreateEvent extends React.Component {
             recieving:this.state.recieving
         }
         AuthPostRequest(url,data,getKey()).then(data=>{
-            if(data.status === false){return;}
+            if(!data.authorized){Router.push('/login'); return;}
             console.log(data);
             let id = data.data.id;
             let url = "/event/"+id;
