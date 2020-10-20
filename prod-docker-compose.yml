@@ -9,7 +9,7 @@ services:
         ports:
             - "5432:5432"
     web:
-        image: aaverill/family-list-app:1.0
+        image: aaverill/family-list-app:latest
         ports:
             - "8989:3000"
 volumes:
