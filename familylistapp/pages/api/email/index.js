@@ -20,6 +20,7 @@ async function sendEmail(to,subject,message){
         html:message,
         text:message
     });
+    return email;
     console.log("Message sent! "+email.messageId);
 }
 export default async function (req, res) {
@@ -47,8 +48,8 @@ export default async function (req, res) {
             });
             let to = emailTo;
             let subject = postObj["subject"];
-            //sendEmail(to,subject,body);
-        
+            let emailResult = await sendEmail(to,subject,body);
+        res.json({authorized:true,result:emailResult});
     }
 
     res.json({});
