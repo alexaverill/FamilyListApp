@@ -8,6 +8,7 @@ export default async function (req, res) {
     }
     if(req.method === "POST"){
         let itemOBJ = JSON.parse(req.body);
+        console.log(itemOBJ);
         let item = await model.sequelize.models.list_item.create(itemOBJ);
         let data = {
             authorized:true,

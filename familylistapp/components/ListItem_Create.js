@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 //import {addListItem} from './API.js';
 import {AuthPostRequest, PostRequest, AuthDeleteRequest} from '../utils/api'
 import {getKey} from '../utils/session';
-import { Router } from 'next/router';
+import  Router  from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
@@ -69,6 +69,7 @@ class CreateListItem extends React.Component {
         console.log(listItem);
         let url = "/api/listitem";
         if(this.state.id >0){
+           
             url = "/api/listitem/"+this.state.id;
             listItem.id = this.state.id;
         }
@@ -77,7 +78,8 @@ class CreateListItem extends React.Component {
             if(!data.authorized){
                 Router.push("/login");
             }
-            this.setState({ inEdit: false,id:data.id });
+            console.log(data.data);
+            this.setState({ inEdit: false,id:data.data.id });
         });
         
     }
