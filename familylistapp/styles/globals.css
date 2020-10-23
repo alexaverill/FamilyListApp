@@ -12,6 +12,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#login-form{
+  width: 700px;
+  margin: 5% auto 0 auto;
+}
+
 .navbar{
   background-color: #00647c;
   color:white;
@@ -32,6 +38,14 @@ code {
 }
 .claimBtn{
   width:100%
+}
+.btn-primary{
+  background-color: #00647c;
+  border-color: #00647c;
+}
+.btn-primary:hover{
+  background-color: #003a50;
+  border-color: #003a50;
 }
 .col{
   align-items: center;
@@ -76,6 +90,9 @@ code {
 }
 .form-group-right-spacing{
   margin-right: 8%;
+}
+.form-control{
+  margin-bottom: 3%;
 }
 .header-btn{
   margin-top:3%;
@@ -122,6 +139,7 @@ text-align: left;
   font-size:1.25em;
   font-weight: 500;
 }
+
 @media (max-width: 800px) { 
   .col, .col-md-auto{
     margin:2% 0 1.5% 0;
