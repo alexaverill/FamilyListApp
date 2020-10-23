@@ -4,7 +4,11 @@ export function startSession(userName,userID,authKey){
     localStorage.setItem('key',authKey);
 }
 export function getUsername(){
-    return localStorage.getItem('username');
+    if("username" in localStorage){
+        return localStorage.getItem('username');
+    }else{
+        return null;
+    }
 }
 export function getID(){
     return Number(localStorage.getItem('id'));

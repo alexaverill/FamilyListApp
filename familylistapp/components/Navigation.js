@@ -10,8 +10,8 @@ class Navigation extends React.Component {
         super(props);
     }
     render() {
-        //let name = getUsername();
-        let name ="";
+        let name = getUsername();
+        //let name ="";
         let showLogin = false;
         if(name == null || name.length <=0){
             showLogin = true;
