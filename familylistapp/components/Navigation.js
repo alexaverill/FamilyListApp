@@ -8,12 +8,16 @@ import Container from 'react-bootstrap/Container';
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {username:""}
+    }
+    componentDidMount(){
+        this.setState({username:getUsername()})
     }
     render() {
-        let name = getUsername();
+        
         //let name ="";
         let showLogin = false;
-        if(name == null || name.length <=0){
+        if(this.state.username == null || this.state.username.length <=0){
             showLogin = true;
         }
         return (
@@ -29,7 +33,7 @@ class Navigation extends React.Component {
                     </Nav> */}
                     <Nav>
                         {showLogin ? <Nav.Link href="/login">Login</Nav.Link>:
-                        <NavDropdown title={name} id="basic-nav-dropdown">
+                        <NavDropdown title={this.state.username} id="basic-nav-dropdown">
                             <NavDropdown.Item href="logout">Logout</NavDropdown.Item>
                         </NavDropdown>}
                     </Nav>
