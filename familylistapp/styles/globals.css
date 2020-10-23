@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:600&display=swap");
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Source Sans Pro',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,6 +14,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#login-form{
+  max-width: 700px;
+  margin: 5% 0 0 0;
+}
+
 .navbar{
   background-color: #00647c;
   color:white;
@@ -32,6 +40,14 @@ code {
 }
 .claimBtn{
   width:100%
+}
+.btn-primary{
+  background-color: #00647c;
+  border-color: #00647c;
+}
+.btn-primary:hover{
+  background-color: #003a50;
+  border-color: #003a50;
 }
 .col{
   align-items: center;
@@ -77,6 +93,9 @@ code {
 .form-group-right-spacing{
   margin-right: 8%;
 }
+.form-control{
+  margin-bottom: 3%;
+}
 .header-btn{
   margin-top:3%;
 }
@@ -88,7 +107,7 @@ code {
 }
 .navbar-light .navbar-brand{
     color: white;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Staatliches', cursive;
     font-weight:900;
     font-size: x-large;
   
@@ -122,6 +141,7 @@ text-align: left;
   font-size:1.25em;
   font-weight: 500;
 }
+
 @media (max-width: 800px) { 
   .col, .col-md-auto{
     margin:2% 0 1.5% 0;

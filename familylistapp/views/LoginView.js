@@ -51,7 +51,7 @@ class LoginView extends React.Component{
     }
     render(){
         return(
-            <Container className="innerContainer">
+            <Container id="login-form" className="innerContainer">
                  <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle">
                         <Form.Label>Name</Form.Label>
@@ -59,7 +59,7 @@ class LoginView extends React.Component{
                     </Form.Group>
 
                     <Form.Group controlId="eventDate">
-                        <Form.Label>Password:</Form.Label>
+                        <Form.Label>Password</Form.Label>
                         <Form.Control name="password" type="password" onChange={this.handlePasswordChanged} />
                     </Form.Group>
                     
