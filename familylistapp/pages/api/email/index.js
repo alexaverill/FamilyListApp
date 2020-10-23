@@ -49,6 +49,7 @@ export default async function (req, res) {
             let to = emailTo;
             let subject = postObj["subject"];
             let emailResult = await sendEmail(to,subject,body);
+            console.log(emailResult);
         res.json({authorized:true,result:emailResult});
     }
 
