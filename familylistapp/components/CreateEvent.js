@@ -88,7 +88,7 @@ class CreateEvent extends React.Component {
     handleRecieving(event,pos){
         let value = event.target.name;
         let recieveArr = this.state.recievingStatus;
-        recieveArr[pos] = !giveArr[pos];
+        recieveArr[pos] = !recieveArr[pos];
         let recievingArr = this.state.recieving;
         if(event.target.checked){
             if(recievingArr.indexOf(value)<0){
