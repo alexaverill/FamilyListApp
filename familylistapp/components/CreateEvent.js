@@ -10,6 +10,7 @@ import { GetRequest, AuthPostRequest } from '../utils/api.js';
 import styles from '../styles/create.event.module.css'
 import { getKey } from '../utils/session.js';
 import Router from 'next/router';
+import Link from 'next/link'
 class CreateEvent extends React.Component {
     
     constructor(props){
@@ -160,8 +161,11 @@ class CreateEvent extends React.Component {
         
         return result;
      });
+     let url = "/";
         return (
             <Container className="innerContent">
+                <Row><Link href={url}>
+                <a className="backlink"> &lt; Return Home </a></Link> </Row> 
                 <h2>Create New Event</h2>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle" as={Row}>
