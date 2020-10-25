@@ -10,7 +10,14 @@ export default async function (req, res) {
       if(!authorized){
           return res.json({authorized:false})
       }
-    if(req.method==="POST"){
+      if(req.method === "DELETE"){
+         let deletedUser= await model.sequelize.models.user.destroy({
+             where:{
+                 id:id
+             }
+         });
+         return res.json({authorized:true,data:deletedUser});
+      }else if(req.method==="POST"){
         
         let userObj = JSON.parse(req.body);
         console.log(userObj);
