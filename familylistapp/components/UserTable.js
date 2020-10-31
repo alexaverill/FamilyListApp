@@ -1,22 +1,27 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import {AuthGetRequest, AuthPostRequest,AuthDeleteRequest} from '../utils/api';
 import { getKey } from '../utils/session';
 import EditableInput from './EditableInput'
 import ResetPassword from './ResetPassword';
+import CreateUserForm from './CreateUserForm';
+import styles from '../styles/user.table.module.css'
 class UserTable extends React.Component{
     
     constructor(props){
         super(props);
         //{this.props.date.toDateString()}
-        this.state = {users:["1S"]}
+        this.state = {users:[]}
         this.handleChangedName = this.handleChangedName.bind(this);
         this.handleUserUpdate = this.handleUserUpdate.bind(this);
         this.handleChangedEmail = this.handleChangedEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.handleCreateUser = this.handleCreateUser.bind(this);
     }
     findUserPosition(prop,searchVal){
         let users = this.state.users;
@@ -98,6 +103,17 @@ class UserTable extends React.Component{
             this.setState({users:users});
         })
     }
+    handleCreateUser(userData){
+        let url = "/api/user"
+        AuthPostRequest(url,userData,getKey()).then((data)=>{
+            console.log(data);
+            let userList = this.state.users;
+            userList.push(data);
+            this.setState({users:userList})
+        })
+       document.body.click();
+    }
+    
     render() {
         let userTable = this.state.users.map((user)=>{
             return <tr>
@@ -123,10 +139,22 @@ class UserTable extends React.Component{
                                 
           </tr>;
         })
+        const userPopover = (<Popover className={styles.userPopover} id="create-user-pop">
+            
+        <Popover.Content>
+            <CreateUserForm submitCallback={this.handleCreateUser}/>
+        </Popover.Content>
+    </Popover>);
         return (
 
             <>
-            <Row><Button onClick={this.addUser}>Add User</Button></Row>
+            <Row className="leftJustifyRow">
+                <OverlayTrigger trigger="click"  rootClose placement="bottom" overlay={userPopover}>
+                    <Button onClick={this.addUser}>Add User</Button>
+                    </OverlayTrigger>
+            
+            </Row>
+
             <Row>
                 
             </Row>

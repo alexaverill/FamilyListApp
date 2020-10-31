@@ -141,7 +141,9 @@ text-align: left;
   font-size:1.25em;
   font-weight: 500;
 }
-
+.leftJustifyRow{
+  justify-content: left !important;
+}
 @media (max-width: 800px) { 
   .col, .col-md-auto{
     margin:2% 0 1.5% 0;

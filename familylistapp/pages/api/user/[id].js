@@ -24,7 +24,6 @@ export default async function (req, res) {
         let updatedUser = {};
         if("password" in userObj){
             let saltRounds = 10;
-            console.log(userObj.password);
             let password = await new Promise((resolve,reject)=>{
                 bcrypt.hash(userObj.password,saltRounds,(err,hash)=>{
                     if(err){
