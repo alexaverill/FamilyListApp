@@ -1,7 +1,9 @@
 import React from 'react';
 import ListItem from './ListItem.js';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 //import {addListItem} from './API.js';
 import {AuthPostRequest, PostRequest, AuthDeleteRequest} from '../utils/api'
@@ -10,7 +12,7 @@ import  Router  from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '' };
+        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '', validated:false };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCost = this.handleCost.bind(this);
@@ -56,32 +58,40 @@ class CreateListItem extends React.Component {
             })
     }
     handleSubmit(event) {
-        event.preventDefault();
-        let listItem = {
-            name: this.state.itemName,
-            url: this.state.url,
-            price: this.state.cost,
-            isClaimed: false,
-            listId: this.state.listID,
-            quantity: 1,
-            comments: this.state.comments
-        }
-        console.log(listItem);
-        let url = "/api/listitem";
-        if(this.state.id >0){
-           
-            url = "/api/listitem/"+this.state.id;
-            listItem.id = this.state.id;
-        }
-        AuthPostRequest(url,listItem,getKey()).then((data)=>{
-            console.log(data);
-            if(!data.authorized){
-                Router.push("/login");
+
+        const form = event.currentTarget;
+
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.setState({validated:true});
+        } else{
+            event.preventDefault();
+            let listItem = {
+                name: this.state.itemName,
+                url: this.state.url,
+                price: this.state.cost,
+                isClaimed: false,
+                listId: this.state.listID,
+                quantity: 1,
+                comments: this.state.comments
             }
-            console.log(data.data);
-            this.setState({ inEdit: false,id:data.data.id });
-        });
-        
+            console.log(listItem);
+            let url = "/api/listitem";
+            if(this.state.id >0){
+            
+                url = "/api/listitem/"+this.state.id;
+                listItem.id = this.state.id;
+            }
+            AuthPostRequest(url,listItem,getKey()).then((data)=>{
+                console.log(data);
+                if(!data.authorized){
+                    Router.push("/login");
+                }
+                console.log(data.data);
+                this.setState({ inEdit: false,id:data.data.id });
+            });
+        }
     }
     handleCost(event) {
         this.setState({ cost: event.target.value });
@@ -102,30 +112,50 @@ class CreateListItem extends React.Component {
         if (this.state.inEdit) {
             return (
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
-                    <Form onSubmit={this.handleSubmit} className="list-edit">
+                    <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit} className="list-edit">
                         <Form.Row>
-                            <Form.Group controlId="itemName" className="form-group-right-spacing" md="4">
-                                <Form.Label>Item Name</Form.Label>
-                                <Form.Control type="text" name="name" value={this.state.itemName} required maxLength="100" onChange={this.handleNameChange} />
-                            </Form.Group>
-
-                            <Form.Group controlId="cost" className="form-group-right-spacing"  sm="1" >
-                                <Form.Label >Cost:</Form.Label>
-                                <Form.Control name="cost" type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
-                            </Form.Group>
+                            <Col md={8}>
+                                <Form.Group controlId="itemName" className="form-group-right-spacing">
+                                    <Form.Label>Item Name</Form.Label>
+                                    <Form.Control type="text" name="name" value={this.state.itemName} required maxLength="100" onChange={this.handleNameChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                    Please enter the name of the item.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col md={4}>
+                                <Form.Group controlId="cost" md="4" sm="4" >
+                                    <Form.Label>Cost:</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text>$</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control name="cost" required type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
+                                        <Form.Control.Feedback type="invalid">
+                                        Please enter the item cost. If there is no cost, enter 0.
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Col>
                         </Form.Row>
 
-                        <Form.Group controlId="url" className="form-group-right-spacing" >
-                            <Form.Label column >Item URL:</Form.Label>
-                            <Form.Control name="url" type="text" onChange={this.handleURL} value={this.state.url}  maxLength="255" />
-                        </Form.Group>
+                        <Form.Row>
+                            <Col md={12}>
+                                <Form.Group controlId="url" >
+                                    <Form.Label column >Item URL:</Form.Label>
+                                    <Form.Control name="url" type="text" onChange={this.handleURL} value={this.state.url}  maxLength="255" />
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
 
-
-
-                        <Form.Group controlId="comments" className="form-group-right-spacing" >
-                            <Form.Label column >Comments:</Form.Label>
-                            <Form.Control name="comments" type="text" onChange={this.handleComments} value={this.state.comments}  maxLength="255"/>
-                        </Form.Group>
+                        <Form.Row>
+                            <Col md={12}>
+                                <Form.Group controlId="comments" >
+                                    <Form.Label column >Comments:</Form.Label>
+                                    <Form.Control name="comments" type="text" onChange={this.handleComments} value={this.state.comments}  maxLength="255"/>
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
 
                         <Button variant="primary" type="submit">
                             Save

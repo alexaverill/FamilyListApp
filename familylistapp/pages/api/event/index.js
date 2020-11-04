@@ -18,7 +18,7 @@ export default async function (req, res) {
         }
         let event = await model.sequelize.models.events.create(eventData);
         let give = await event.setGivers(dataObj.giving);
-        let recieve = await event.setRecievers(dataObj.recieving)
+        let recieve = await event.setRecievers(dataObj.receiving)
         let data = {
             authorized:true,
             data:event
