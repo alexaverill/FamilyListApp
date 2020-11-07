@@ -22,6 +22,7 @@ class UserTable extends React.Component{
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
+        this.handleAdminCheck = this.handleAdminCheck.bind(this);
     }
     findUserPosition(prop,searchVal){
         let users = this.state.users;
@@ -49,9 +50,9 @@ class UserTable extends React.Component{
             delete userObj["password"];
         }
         let url = "/api/user/"+id;
-        console.log(getKey());
         AuthPostRequest(url,userObj,getKey()).then((data)=>{
             console.log(data);
+            //this.setState({users:data});
         });
     }
     handleChangedName(event,id){
@@ -113,9 +114,25 @@ class UserTable extends React.Component{
         })
        document.body.click();
     }
-    
+    handleAdminCheck(e,id){
+        let users = this.state.users;
+        users.every((u)=>{
+            if(u.id === id){
+                
+                u.isAdmin = e.target.checked;
+                return false;
+            }
+            return true;
+        });
+        
+        this.setState({users:users});
+        this.handleUserUpdate(null,id);
+
+
+    }
     render() {
         let userTable = this.state.users.map((user)=>{
+            
             return <tr>
            
             <td><EditableInput text={user.username} id={user.id}
@@ -124,6 +141,7 @@ class UserTable extends React.Component{
             <td><EditableInput text={user.email} id={user.id}
                          onChangeHandle={this.handleChangedEmail}
                          onFinish = {this.handleUserUpdate}/></td>
+            <td><input type="checkbox" onChange={(e)=>this.handleAdminCheck(e,user.id)} checked={user.isAdmin} /></td>
             <td>
                 <Row>
                 <ResetPassword text={user.password} id={user.id} onChangeHandle={this.handleChangePassword}
@@ -159,16 +177,17 @@ class UserTable extends React.Component{
                 
             </Row>
             <Table striped bordered hover>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Manage</th>
-    </tr>
-  </thead>
-  <tbody>
-            {userTable}
-            </tbody>
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Administrator</th>
+                    <th>Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {userTable}
+                </tbody>
             </Table>
             </>
         );

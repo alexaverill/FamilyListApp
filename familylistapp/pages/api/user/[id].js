@@ -20,7 +20,6 @@ export default async function (req, res) {
       }else if(req.method==="POST"){
         
         let userObj = JSON.parse(req.body);
-        console.log(userObj);
         let updatedUser = {};
         if("password" in userObj){
             let saltRounds = 10;
@@ -36,6 +35,7 @@ export default async function (req, res) {
             updatedUser = await model.sequelize.models.user.update({
                 username:userObj.username,
                 email:userObj.email,
+                idAdmin:userObj.isAdmin,
                 password:password
             
             },{
@@ -47,6 +47,7 @@ export default async function (req, res) {
             updatedUser = await model.sequelize.models.user.update({
             username:userObj.username,
             email:userObj.email,
+            isAdmin:userObj.isAdmin,
         },{
             where:{
               id:id
@@ -68,7 +69,7 @@ export default async function (req, res) {
             id:id
         },
         
-            attributes: ['id', 'username'],
+            attributes: ['id', 'username','email','isAdmin'],
             
         }
     );

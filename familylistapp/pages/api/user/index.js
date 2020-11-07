@@ -26,7 +26,7 @@ export default async function (req, res) {
     if(req.method==="GET"){
         let Users = await model.sequelize.models.user.findAll(
             {
-                attributes: ['id', 'username',"email"],
+                attributes: ['id', 'username',"email","isAdmin"],
                 order:[["id","ASC"]]
             }
             
