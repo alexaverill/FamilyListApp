@@ -10,14 +10,26 @@ export default async function (req, res) {
       if(!authorized){
           return res.json({authorized:false})
       }
-    if(req.method==="POST"){
-        
+      if(req.method === "DELETE"){
+        let adminAuthorized = await AdminAuthMiddleware(req,res);
+        if(!adminAuthorized){
+            return res.json({authorized:false})
+        }
+         let deletedUser= await model.sequelize.models.user.destroy({
+             where:{
+                 id:id
+             }
+         });
+         return res.json({authorized:true,data:deletedUser});
+      }else if(req.method==="POST"){
+        let adminAuthorized = await AdminAuthMiddleware(req,res);
+        if(!adminAuthorized){
+            return res.json({authorized:false})
+        }
         let userObj = JSON.parse(req.body);
-        console.log(userObj);
         let updatedUser = {};
         if("password" in userObj){
             let saltRounds = 10;
-            console.log(userObj.password);
             let password = await new Promise((resolve,reject)=>{
                 bcrypt.hash(userObj.password,saltRounds,(err,hash)=>{
                     if(err){
@@ -30,6 +42,7 @@ export default async function (req, res) {
             updatedUser = await model.sequelize.models.user.update({
                 username:userObj.username,
                 email:userObj.email,
+                idAdmin:userObj.isAdmin,
                 password:password
             
             },{
@@ -41,6 +54,7 @@ export default async function (req, res) {
             updatedUser = await model.sequelize.models.user.update({
             username:userObj.username,
             email:userObj.email,
+            isAdmin:userObj.isAdmin,
         },{
             where:{
               id:id
@@ -62,7 +76,7 @@ export default async function (req, res) {
             id:id
         },
         
-            attributes: ['id', 'username'],
+            attributes: ['id', 'username','email','isAdmin'],
             
         }
     );

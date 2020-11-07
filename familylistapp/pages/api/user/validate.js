@@ -9,7 +9,7 @@ export default async function (req, res) {
         where:{
             username:usernameIn
         },
-        attributes:['id','username','password']
+        attributes:['id','username','password',"isAdmin"]
     })
     console.log(userData);
     if(userData == null || userData == undefined || userData.length <=0){
@@ -36,7 +36,7 @@ export default async function (req, res) {
     if(!result){
           returnVal= {valid:false};
     }else{
-   let auth = tokenizer.generateToken(userData[0].username);
+   let auth = tokenizer.generateToken(userData[0].username,userData[0].isAdmin);
      returnVal = {
         valid:result,
         id:userData[0].id,
