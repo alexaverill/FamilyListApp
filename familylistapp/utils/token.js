@@ -22,7 +22,7 @@ export function validateToken(token){
     }
     return true;
 }
-export function getInfoFromToken(){
+export function getInfoFromToken(token){
     if(token == undefined){
         return {}
     }

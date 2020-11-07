@@ -11,6 +11,10 @@ export default async function (req, res) {
           return res.json({authorized:false})
       }
       if(req.method === "DELETE"){
+        let adminAuthorized = await AdminAuthMiddleware(req,res);
+        if(!adminAuthorized){
+            return res.json({authorized:false})
+        }
          let deletedUser= await model.sequelize.models.user.destroy({
              where:{
                  id:id
@@ -18,7 +22,10 @@ export default async function (req, res) {
          });
          return res.json({authorized:true,data:deletedUser});
       }else if(req.method==="POST"){
-        
+        let adminAuthorized = await AdminAuthMiddleware(req,res);
+        if(!adminAuthorized){
+            return res.json({authorized:false})
+        }
         let userObj = JSON.parse(req.body);
         let updatedUser = {};
         if("password" in userObj){
