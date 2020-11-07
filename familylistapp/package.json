@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
