@@ -135,9 +135,11 @@ class CreateEvent extends React.Component {
     }
     componentDidMount(){
         let url = "/api/user";
-     AuthGetRequest(url,getKey()).then((user)=>{
-         console.log(user);
-         if(!user.authorized) { Router.push("/login"); return;}
+
+     AuthGetRequest(url,getKey()).then((data)=>{
+         console.log(data);
+         let user = data.users;
+         if(!data.authorized){Router.push("/login");}
           this.setState({users:user});
           this.state.users.map((u)=> {
             this.setState((state, props) => ({
