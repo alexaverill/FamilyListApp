@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { GetRequest, AuthPostRequest } from '../utils/api.js';
+import { AuthGetRequest, AuthPostRequest } from '../utils/api.js';
 //import {createEvent, getUsers} from './API.js';
 import styles from '../styles/create.event.module.css'
 import { getKey } from '../utils/session.js';
@@ -135,9 +135,10 @@ class CreateEvent extends React.Component {
     }
     componentDidMount(){
         let url = "/api/user";
-     GetRequest(url).then((user)=>{
-         console.log(user);
-         if(user.status === false) {return;}
+     AuthGetRequest(url,getKey()).then((data)=>{
+         console.log(data);
+         let user = data.users;
+         if(!data.authorized){Router.push("/login");}
           this.setState({users:user});
           this.state.users.map((u)=> {
             this.setState((state, props) => ({
