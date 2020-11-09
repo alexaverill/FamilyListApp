@@ -135,6 +135,7 @@ class CreateEvent extends React.Component {
     }
     componentDidMount(){
         let url = "/api/user";
+
      AuthGetRequest(url,getKey()).then((data)=>{
          console.log(data);
          let user = data.users;

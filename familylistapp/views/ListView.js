@@ -46,7 +46,7 @@ class ListView extends React.Component{
         return(
             <Container className="innerContent">
             <Row> <Link href={url}>
-                <a className="backlink"> &lt; Return to {this.state.eventName}</a></Link> </Row> 
+                <a className="backlink"> &lsaquo;&lsaquo; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>{this.state.user}'s Wishlist</h1></Row>
            
             {list}
