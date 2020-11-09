@@ -8,6 +8,7 @@ import { AuthGetRequest, AuthPostRequest } from '../utils/api';
 //import {getEvent,getEventLists} from './API.js';
 import { getID, getKey } from '../utils/session';
 import Router from 'next/router';
+import Link from 'next/link';
 class EventView extends React.Component {
     constructor(props){
         super(props);
@@ -87,14 +88,14 @@ class EventView extends React.Component {
         }
         return <Row className="listRow ">
             <Col sm="4" md="10" lg="10"><div className="userName">{list.user.username}</div></Col>
-            <Row>
-                <Col><a href={claimURL} className="btn btn-primary fullWidthBtn">{text}</a></Col>
-            </Row>
+            <Col><a href={claimURL} className="btn btn-primary fullWidthBtn">{text}</a></Col>
         </Row>
         
     });
         return(
             <Container className="innerContent">
+                <Row> <Link href="/">
+                <a className="backlink"> &lsaquo;&lsaquo; Return to All Events</a></Link> </Row> 
             <div className="header-column">
                 <div className="headerText">
                     <h2>{title}</h2>

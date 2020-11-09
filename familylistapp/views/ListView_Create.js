@@ -82,13 +82,15 @@ class CreateListView extends React.Component{
         return (
             <Container className="innerContent">
                             <Row> <Link href={url}>
-                <a className="backlink"> &lt; Return to {this.state.eventName}</a></Link> </Row> 
+                <a className="backlink"> &lsaquo;&lsaquo; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
-                <Row className="headerRow"><div className ="header-btn"><Button onClick={this.sendReminder}>Send List Notification</Button></div></Row>
+                <Row className="headerRow"><div><p>When you're finished with your wishlist, use the button below to notify other participants that it's ready.</p></div></Row>
+                <Row className="headerRow"><div><Button onClick={this.sendReminder}>Share List</Button></div></Row>
             <div className="item-row">
                     {items}
             </div>
-                <Button onClick={this.handleAdd}>Add Item</Button>
+                <hr></hr>
+                <Button onClick={this.handleAdd}>Add A New Item</Button>
             </Container>
 
         );
