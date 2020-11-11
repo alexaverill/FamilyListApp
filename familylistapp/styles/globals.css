@@ -86,6 +86,9 @@ a:hover{
     border-radius: 2%;
   
 }
+.text-center{
+  text-align: center;
+}
 .listHeader{
   display:grid;
   grid-template-columns: 10% auto;

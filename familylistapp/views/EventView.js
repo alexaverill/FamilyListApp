@@ -81,14 +81,16 @@ class EventView extends React.Component {
     const lists = this.state.lists.map((list)=> {
         let claimURL = "/list/"+list.id; 
         let text = 'View List';
+        let button = 'btn btn-primary fullWidthBtn';
         console.log(list);
         if(list.userId === this.state.userID){
             claimURL = url;
-            text = 'Edit List';
-        }
+            text = 'Edit Your List';
+            button = 'btn btn-outline-primary fullWidthBtn';
+        } 
         return <Row className="listRow ">
             <Col sm="4" md="10" lg="10"><div className="userName">{list.user.username}</div></Col>
-            <Col><a href={claimURL} className="btn btn-primary fullWidthBtn">{text}</a></Col>
+            <Col><a href={claimURL} className={button}>{text}</a></Col>
         </Row>
         
     });
@@ -105,8 +107,8 @@ class EventView extends React.Component {
                     <Col sm={8} className="headerCol">
                     {this.state.isRecieving && subTitle}
                 </Col>
-                <Col sm={8} className="headerCol">
-                <Button onClick={this.sendReminder} className="btn btn-secondary header-btn fullWidthBtn"> Send Reminder</Button>
+                <Col sm={8} className="headerCol text-center">
+                <Link href="#" onClick={this.sendReminder}> Send an email reminder to all participants about this event.</Link>
                 </Col>
                 </Row>
             </div>
