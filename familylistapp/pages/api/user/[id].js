@@ -1,5 +1,5 @@
 const model = require("../../../models")
-import {AuthMiddleware} from '../AuthMiddleware';
+import {AuthMiddleware,AdminAuthMiddleware} from '../AuthMiddleware';
 const bcrypt = require('bcrypt');
 export default async function (req, res) {
     

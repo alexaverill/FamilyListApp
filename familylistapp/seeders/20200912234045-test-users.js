@@ -24,6 +24,7 @@ module.exports = {
         }
     });
 });
+//await queryInterface.bulkDelete('users', null, {});
    await queryInterface.bulkInsert('users',[
     {
       username: "admin",
@@ -55,5 +56,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+
+    await queryInterface.bulkDelete('users', null, {});
   }
 };

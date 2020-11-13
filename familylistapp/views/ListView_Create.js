@@ -66,7 +66,7 @@ class CreateListView extends React.Component{
         let url = "/api/email";
         let sub = `${this.state.eventName} - ${getUsername()}'s list`
         let msg = `${getUsername()} has created a list for ${this.state.eventName}!.
-        This list can be can be viewed: <a href="${this.state.host}/list/${this.state.listID}">${this.state.host}/list/${this.state.listID}</a>`;
+        This list can be can be viewed: <a href="http://familylistapp.com/list/${this.state.listID}">${this.state.host}/list/${this.state.listID}</a>`;
         
         let data = {
             eventID: this.state.eventID,
