@@ -14,7 +14,7 @@ module.exports = {
      * }], {});
     */
    const saltRounds = 10;
-   let passwordIn = "password";
+   let passwordIn = "admin";
    const hashed = await new Promise((resolve,reject)=>{
     bcrypt.hash(passwordIn,saltRounds,(err,hash)=>{
         if(err){
@@ -26,12 +26,12 @@ module.exports = {
 });
    await queryInterface.bulkInsert('users',[
     {
-      username: "user1",
+      username: "admin",
       password: hashed,
       passwordReset: false,
       email: "test@test.com",
       birthday: new Date(),
-      isAdmin: false,
+      isAdmin: true,
      createdAt: new Date(),
        updatedAt: new Date()
     },
@@ -44,27 +44,7 @@ module.exports = {
       isAdmin: false,
      createdAt: new Date(),
        updatedAt: new Date()
-    },
-    {
-      username: "user3",
-      password: hashed,
-      passwordReset: false,
-      email: "test@test.com",
-      birthday: new Date(),
-      isAdmin: false,
-     createdAt: new Date(),
-       updatedAt: new Date()
-    },
-    {
-      username: "user4",
-      password: hashed,
-      passwordReset: false,
-      email: "test@test.com",
-      birthday: new Date(),
-      isAdmin: false,
-     createdAt: new Date(),
-       updatedAt: new Date()
-    },
+    }
   ]);
   },
 
