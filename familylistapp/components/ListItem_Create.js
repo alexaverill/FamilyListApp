@@ -125,7 +125,7 @@ class CreateListItem extends React.Component {
                             </Col>
                             <Col md={4}>
                                 <Form.Group controlId="cost" md="4" sm="4" >
-                                    <Form.Label>Cost:</Form.Label>
+                                    <Form.Label>Cost</Form.Label>
                                     <InputGroup>
                                         <InputGroup.Prepend>
                                             <InputGroup.Text>$</InputGroup.Text>
@@ -142,7 +142,7 @@ class CreateListItem extends React.Component {
                         <Form.Row>
                             <Col md={12}>
                                 <Form.Group controlId="url" >
-                                    <Form.Label column >Item URL:</Form.Label>
+                                    <Form.Label>Item URL</Form.Label>
                                     <Form.Control name="url" type="text" onChange={this.handleURL} value={this.state.url}  maxLength="255" />
                                 </Form.Group>
                             </Col>
@@ -151,7 +151,7 @@ class CreateListItem extends React.Component {
                         <Form.Row>
                             <Col md={12}>
                                 <Form.Group controlId="comments" >
-                                    <Form.Label column >Comments:</Form.Label>
+                                    <Form.Label>Comments</Form.Label>
                                     <Form.Control name="comments" type="text" onChange={this.handleComments} value={this.state.comments}  maxLength="255"/>
                                 </Form.Group>
                             </Col>
