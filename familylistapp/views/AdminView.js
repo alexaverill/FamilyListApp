@@ -6,10 +6,9 @@ import Container from 'react-bootstrap/Container';
 import { AuthGetRequest } from '../utils/api';
 import { getKey } from '../utils/session';
 import Router from 'next/router';
-//import {getList,claimItem, getEvent} from './API.js';
 import Link from 'next/link'
 import UserTable from '../components/UserTable';
-import {getInfoFromToken} from '../utils/token'
+import EventTable from '../components/EventTable';
 class ListView extends React.Component{
     constructor(props){
         super(props);
@@ -31,7 +30,8 @@ class ListView extends React.Component{
             <Container className="innerContent">
                 <h2>Users</h2>
                 <UserTable/>
-                <h2>Settings</h2>
+                <h2>Events</h2>
+                <EventTable/>
             </Container>
         );
     }
