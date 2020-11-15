@@ -130,7 +130,7 @@ class CreateListItem extends React.Component {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text>$</InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <Form.Control name="cost" required type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
+                                        <Form.Control name="cost" type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
                                         <Form.Control.Feedback type="invalid">
                                         Please enter the item cost. If there is no cost, enter 0.
                                         </Form.Control.Feedback>
