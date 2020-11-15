@@ -13,7 +13,7 @@ import Router from 'next/router';
 class CreateListView extends React.Component{
     constructor(props){
         super(props);
-        this.state = {eventName:"",eventID:"",listID:'',listItems:[],host:this.props.host};
+        this.state = {eventName:"",eventID:"",listID:'',listItems:[],host:this.props.host,emailSent:false};
         this.handleAdd = this.handleAdd.bind(this);
         this.handleItemDeleted = this.handleItemDeleted.bind(this);
         this.sendReminder = this.sendReminder.bind(this);
@@ -62,7 +62,7 @@ class CreateListView extends React.Component{
         this.setState({listItems:list});
     }
     sendReminder(){
-       
+       if(this.state.emailSent){return;}
         let url = "/api/email";
         let sub = `${this.state.eventName} - ${getUsername()}'s list`
         let msg = `${getUsername()} has created a list for ${this.state.eventName}!.
@@ -74,6 +74,7 @@ class CreateListView extends React.Component{
             subject:sub
         }
         AuthPostRequest(url,data,getKey());
+        this.setState({emailSent:true})
     }
     render(){
         let url = "/event/"+this.state.eventID;

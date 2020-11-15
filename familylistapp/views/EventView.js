@@ -22,7 +22,8 @@ class EventView extends React.Component {
             lists:[],
             currentListIDs:[],
             userID:-1,
-            host:this.props.host
+            host:this.props.host,
+            emailSent:false
         };
         
         this.sendReminder = this.sendReminder.bind(this);
@@ -57,7 +58,7 @@ class EventView extends React.Component {
         })
     }
     sendReminder(){
-        console.log("HOST: "+this.state.host);
+        if(this.state.emailSent){return;}
         let url = "/api/email";
         let sub = `${this.state.name} Reminder`
         let msg = `This is a reminder that the event: ${this.state.name} has been created for ${this.state.date}. 
@@ -68,6 +69,7 @@ class EventView extends React.Component {
             subject:sub
         }
         AuthPostRequest(url,data,getKey());
+        this.setState({emailSent:true})
     }
     render(){
         let title = this.state.name;
