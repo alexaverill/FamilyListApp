@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       eventDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       image: {
         type: Sequelize.STRING

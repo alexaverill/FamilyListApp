@@ -12,7 +12,7 @@ export default async function (req, res) {
         console.log(dataObj);
         let eventData = {
             eventName:dataObj.name,
-            eventDate: dataObj.date,
+            eventDate:new Date(dataObj.date),
             comments:dataObj.comments,
             image:"/event_images/"+(Math.floor(Math.random() * 24)+1)+".jpg"
         }
