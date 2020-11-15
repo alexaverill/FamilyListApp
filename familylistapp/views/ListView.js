@@ -4,8 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { AuthGetRequest } from '../utils/api';
-import { getKey } from '../utils/session';
-import { Router } from 'next/router';
+import { getKey,getUsername } from '../utils/session';
+import Router from 'next/router';
 //import {getList,claimItem, getEvent} from './API.js';
 import Link from 'next/link'
 class ListView extends React.Component{
@@ -22,9 +22,15 @@ class ListView extends React.Component{
             }
             let listData = data.data[0];
             let name = listData.user.username;
+            let eventID = listData.event.id;
+            if(name === getUsername()){
+                let url = "/list/create/"+eventID;
+                Router.push(url); // force redirect if you are the owner of the list.
+                return;
+            }
             let items = listData.list_items;
             let eventName = listData.event.eventName;
-            let eventID = listData.event.id;
+            
             this.setState({user:name,list:items, eventName:eventName,eventID:eventID});
         });
         // getList(this.props.match.params.id).then(data=>{

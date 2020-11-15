@@ -12,7 +12,7 @@ import  Router  from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '', validated:false };
+        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: 0, quantity: 1, comments: '', url: '', validated:false };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCost = this.handleCost.bind(this);
