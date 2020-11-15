@@ -40,7 +40,8 @@ class EventView extends React.Component {
             let availableLists = data.data.lists.map((obj)=>obj.userId);
             let userID = getID();
             let rec = recievers.indexOf(userID) >= 0;
-            let date = new Date(data.data.eventDate);
+            let simpleDate = data.data.eventDate.split("Z");
+            let date = new Date(simpleDate[0]);
             this.setState({
                 name:data.data.eventName,
                 date:date.toDateString(),

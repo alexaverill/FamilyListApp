@@ -41,6 +41,7 @@ class CreateEvent extends React.Component {
     }
     handleDateChange(event){
         console.log(event.target.value);
+        
         this.setState({date:event.target.value});
     }
     validateForm(event){
