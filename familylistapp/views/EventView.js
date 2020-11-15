@@ -60,7 +60,7 @@ class EventView extends React.Component {
         let url = "/api/email";
         let sub = `${this.state.name} Reminder`
         let msg = `This is a reminder that the event: ${this.state.name} has been created for ${this.state.date}. 
-        Lists can be viewed: <a href="http://familylistapp.com/event/${this.state.id}">${this.state.host}/event/${this.state.id}</a>`;
+        Lists can be viewed: <a href="http://familylistapp.com/event/${this.state.id}">http://familylistapp.com/event/${this.state.id}</a>`;
         let data = {
             eventID:this.state.id,
             message:msg,
