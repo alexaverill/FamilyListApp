@@ -51,7 +51,7 @@ class CreateListItem extends React.Component {
     }
     deleteCallback(){
             let url = "/api/listitem/"+this.state.id;
-            AuthDeleteRequest(url,getKey()).then((data)=>{
+            AuthDeleteRequest(url,{},getKey()).then((data)=>{
                 console.log(data);
                 this.props.itemDeleted(this.state.id);
 
