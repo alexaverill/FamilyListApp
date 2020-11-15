@@ -44,9 +44,7 @@ class HomeView extends React.Component{
                 <div className="headerText">
                     <h2>Events</h2>
                 </div>
-                <div className="">
-                    <a href="/event/create" className="btn btn-primary addEventBtn">Add Event</a>
-                </div>
+                
             </div>
             <Row>
                 {cards}

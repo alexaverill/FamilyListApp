@@ -163,7 +163,11 @@ class EventTable extends React.Component{
         return (
 
             <>
-
+            <Row>
+            <div className="">
+                    <a href="/event/create" className="btn btn-primary addEventBtn">Add Event</a>
+                </div>
+            </Row>
             <Row>
                 
             </Row>
