@@ -39,6 +39,18 @@ class EventView extends React.Component {
             
             let recievers = data.data.Recievers.map((obj)=>obj.id);
             let availableLists = data.data.lists.map((obj)=>obj.userId);
+            let lists = data.data.lists;
+            // console.log(getID());
+            let endList = [];
+            for(let x=0;x<lists.length; x++){
+                console.log(lists[x]);
+                if(lists[x].userId === getID()){
+                    endList.unshift(lists[x]);
+                }else{
+                    endList.push(lists[x]);
+                }
+            }
+            console.log(endList);
             let userID = getID();
             let rec = recievers.indexOf(userID) >= 0;
             let simpleDate = data.data.eventDate.split("Z");
@@ -49,7 +61,7 @@ class EventView extends React.Component {
                  giving:givers,
                  recieving:recievers, 
                  isRecieving:rec,
-                 lists: data.data.lists,//data.data[0].lists,
+                 lists: endList,//data.data[0].lists,
                 currentListIDs:availableLists,
                    userID:getID()
                 });
@@ -76,22 +88,26 @@ class EventView extends React.Component {
         let date = this.state.date;
         let url = "/list/create/"+this.state.id;
         let btnText = 'Create Your List';
+        let btnClasses = "header-btn btn btn-primary fullWidthBtn";
         if(this.state.currentListIDs.indexOf(this.state.userID)>=0){
             btnText = "Edit Your List"
+            btnClasses = "header-btn btn btn-primary fullWidthBtn";
         }
-        let subTitle =<a href={url} className="header-btn btn btn-primary fullWidthBtn">{btnText}</a>;
+        let subTitle =<a href={url} className={btnClasses}>{btnText}</a>;
         
     const lists = this.state.lists.map((list)=> {
         let claimURL = "/list/"+list.id; 
         let text = 'View List';
-        console.log(list);
+        let classes = "btn btn-primary fullWidthBtn"
+        //console.log(lizt);
         if(list.userId === this.state.userID){
             claimURL = url;
             text = 'Edit List';
+            classes = "btn btn-success fullWidthBtn"
         }
         return <Row className="listRow ">
             <Col sm="4" md="10" lg="10"><div className="userName">{list.user.username}</div></Col>
-            <Col><a href={claimURL} className="btn btn-primary fullWidthBtn">{text}</a></Col>
+            <Col><a href={claimURL} className={classes}>{text}</a></Col>
         </Row>
         
     });
