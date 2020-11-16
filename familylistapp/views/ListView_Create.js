@@ -77,6 +77,7 @@ class CreateListView extends React.Component{
         this.setState({emailSent:true})
     }
     render(){
+        if(this.state.eventName.length <=0){return <></>;}
         let url = "/event/"+this.state.eventID;
         let items = this.state.listItems;
 

@@ -84,6 +84,7 @@ class EventView extends React.Component {
         this.setState({emailSent:true})
     }
     render(){
+        if(this.state.name.length <=0 || this.state.date.length <=0 ){return <></>;}
         let title = this.state.name;
         let date = this.state.date;
         let url = "/list/create/"+this.state.id;

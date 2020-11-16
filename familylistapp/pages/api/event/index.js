@@ -25,7 +25,12 @@ export default async function (req, res) {
         }
         return res.json(data);
     }
-    
+    const {
+        query: { id },
+      } = req
+    // if(id !==undefined && id !==null){
+
+    // }else{
     let dateTime = Date.now();
     let EventJson = await model.sequelize.models.events.findAll(
         {
@@ -41,4 +46,6 @@ export default async function (req, res) {
         data:EventJson
     }
     res.json(data);
+    return;
+    //}
 }

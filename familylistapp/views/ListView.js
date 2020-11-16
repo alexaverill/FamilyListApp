@@ -43,6 +43,7 @@ class ListView extends React.Component{
         
     }
     render(){
+        if(this.state.eventName.length <=0 || this.state.user.length <=0){return <></>;}
         let url = "/event/"+this.state.eventID;
         const list = this.state.list.map((Claim)=> 
             <ListItem id={Claim.id} name={Claim.name} 
