@@ -130,6 +130,7 @@ class EventTable extends React.Component{
 
     }
     render() {
+        if(this.state.events.length<=0){return <></>;}
         let eventTable;
         if(this.state.events.length>0){
              eventTable= this.state.events.map((event)=>{

@@ -132,6 +132,7 @@ class UserTable extends React.Component{
 
     }
     render() {
+        if(this.state.users.length<=0){return <></>;}
         let userTable;
         if(this.state.users.length>0){
              userTable= this.state.users.map((user)=>{
