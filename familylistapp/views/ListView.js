@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { AuthGetRequest } from '../utils/api';
-import { getKey,getUsername } from '../utils/session';
+import { getKey,getUsername,getID } from '../utils/session';
 import Router from 'next/router';
 //import {getList,claimItem, getEvent} from './API.js';
 import Link from 'next/link'
@@ -29,6 +29,16 @@ class ListView extends React.Component{
                 return;
             }
             let items = listData.list_items;
+            let claimedItems = [];
+            let otherItems = [];
+            items.forEach((i)=>{
+                if(i.claimedBy === getID()){
+                    claimedItems.push(i);
+                }else{
+                    otherItems.push(i);
+                }
+            });
+             items = claimedItems.concat(otherItems);
             let eventName = listData.event.eventName;
             
             this.setState({user:name,list:items, eventName:eventName,eventID:eventID});
@@ -45,7 +55,9 @@ class ListView extends React.Component{
     render(){
         if(this.state.eventName.length <=0 || this.state.user.length <=0){return <></>;}
         let url = "/event/"+this.state.eventID;
+        
         const list = this.state.list.map((Claim)=> 
+
             <ListItem id={Claim.id} name={Claim.name} 
                     cost={Claim.price} url={Claim.url} 
                     quantity={Claim.quantity} comments={Claim.comments} 
