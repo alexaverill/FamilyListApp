@@ -1,0 +1,12 @@
+.listRowclaimed{
+    background-color: #00647c;
+    color:white;
+    font-weight: bold;
+  }
+  .claimSection{
+    flex-direction: column;
+  }
+  .listRowClaimedOthers{
+    background-color: #e8e8e8;
+  }
+ 

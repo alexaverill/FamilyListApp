@@ -92,7 +92,7 @@ class EventView extends React.Component {
         if(list.userId === this.state.userID){
             claimURL = url;
             text = 'Edit Your List';
-            button = 'btn btn-outline-primary fullWidthBtn';
+            button = 'btn btn-outline-primary fullWidthBtn claimBtn';
         } 
         return <Row className="listRow ">
             <Col sm="4" md="10" lg="10"><div className="userName">{list.user.username}</div></Col>

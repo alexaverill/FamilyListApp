@@ -12,7 +12,7 @@ import  Router  from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: 0, quantity: 1, comments: '', url: '', validated:false };
+        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: 0, quantity: 1, comments: '', url: '', validated:false, claimedName:'', showClaims:false };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCost = this.handleCost.bind(this);
@@ -45,6 +45,10 @@ class CreateListItem extends React.Component {
             console.log("LIST ID: "+this.props.listID);
             this.setState({listID:this.props.listID})
         }
+        if(this.props.showClaimed !==undefined){
+            this.setState({showClaims:this.props.showClaimed});
+        }
+        
     }
     handleNameChange(event) {
         this.setState({ itemName: event.target.value });
@@ -166,7 +170,16 @@ class CreateListItem extends React.Component {
         } else {
             return (
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
-                <ListItem name={this.state.itemName} cost={this.state.cost} url ={this.state.url} quantity={this.state.quantity} comments={this.state.comments} edit={true} editCallback={this.editCallback} deleteCallback={this.deleteCallback} />
+                <ListItem name={this.state.itemName} 
+                    cost={this.state.cost} 
+                    url ={this.state.url} 
+                    quantity={this.state.quantity} 
+                    comments={this.state.comments} 
+                    edit={true} 
+                    editCallback={this.editCallback} 
+                    deleteCallback={this.deleteCallback}
+                    claimedBy={this.props.claimed}
+                    showClaimed={this.state.showClaims} />
                 </Row>
             );
         }
