@@ -106,7 +106,9 @@ class CreateEvent extends React.Component {
         if(event.target.checked){
             
                 let pos = givingArr.indexOf(value);
+                if(pos > -1){
                 givingArr.splice(pos,1);
+                }
                 givingArr.push(value);
                 this.setState({giving:givingArr,givingStatus:giveArr});
             
@@ -123,12 +125,15 @@ class CreateEvent extends React.Component {
         recieveArr[pos] = !recieveArr[pos];
         let receivingArr = this.state.receiving;
         if(event.target.checked){
-            if(receivingArr.indexOf(value)<0){
+            
                 let pos = receivingArr.indexOf(value);
-                receivingArr.splice(pos,1);
-                recieveArr.push(value);
+                if(pos > -1){
+                    receivingArr.splice(pos,1);
+                }
+                console.log(value);
+                receivingArr.push(value);
                 this.setState({receiving:receivingArr,receivingStatus:recieveArr});
-            }
+            
         }else{
         
             let pos = receivingArr.indexOf(value);
