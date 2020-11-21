@@ -21,18 +21,26 @@ class CreateListView extends React.Component{
     refreshList(){
         let createListURL = "/api/lists"
         AuthPostRequest(createListURL,{id:this.props.id,userID:getID()},getKey()).then((data)=>{
-            console.log(data);
+            //console.log(data);
             if(!data.authorized){
                 Router.push('/login');
                 return;
             }
             this.setState({listID:data.data.id});
             let list = [];//this.state.listItems;
+            let showClaimed = false;
+            let currentDate = new Date();
+            
+            if(currentDate > this.state.eventDate){
+                showClaimed = true;
+            }
             if(data.data.list_items != undefined && data.data.list_items.length > 0){
                 let itemArr = data.data.list_items;
+                
                 itemArr.forEach((item)=>{
+                    
                     list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} itemDeleted={this.handleItemDeleted}
-                        itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments}/>);
+                        itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments} claimed={item.claimedBy} showClaimed={showClaimed}/>);
                 });
             }
 
@@ -47,9 +55,13 @@ class CreateListView extends React.Component{
                 Router.push('/login');
                 return;
             }
-            this.setState({eventName:data.data.eventName,eventID:data.data.id})
+            let tmpDate = data.data.eventDate;
+            let dateStr = data.data.eventDate.split("T")[0];
+            let date = new Date(dateStr);
+            this.setState({eventName:data.data.eventName,eventID:data.data.id,eventDate:date});
+            this.refreshList();
         })
-        this.refreshList();
+        
 
     }
     handleItemDeleted(itemID){

@@ -17,13 +17,13 @@ class ListItem extends React.Component {
        
         if(this.props.claimedBy !== null && this.props.claimedBy !== undefined){
             let userURL = "/api/user/"+this.props.claimedBy;
-        AuthGetRequest(userURL,getKey()).then(data=>{
-            console.log(data);
-            if(data.length >=1){
-                this.setState({claimedName:data[0].username});
-            }
-        });
-    }
+            AuthGetRequest(userURL,getKey()).then(data=>{
+                console.log(data);
+                if(data.length >=1){
+                    this.setState({claimedName:data[0].username});
+                }
+            });
+        }
     }
     claim(event){
         let url = "/api/listitem/claim/"+this.props.id;
@@ -53,8 +53,12 @@ class ListItem extends React.Component {
         let bgClass = "";
         let claimedText = ""
         if(this.props.edit){
-            button = <Button variant="outline-primary" className="claimBtn" onClick={this.props.editCallback}> Edit </Button>
-            deleteBtn = <Button variant="outline-danger"  onClick={this.props.deleteCallback}> Delete </Button>
+            if(this.props.showClaimed){
+                claimedText = `Given by:${this.state.claimedName}`
+            }else{
+                button = <Button variant="outline-primary" className="claimBtn" onClick={this.props.editCallback}> Edit </Button>
+                deleteBtn = <Button variant="outline-danger"  onClick={this.props.deleteCallback}> Delete </Button>
+            }
         }else{
             if( this.state.claimedBy == getID()){
                 bgClass=styles.listRowclaimed;
