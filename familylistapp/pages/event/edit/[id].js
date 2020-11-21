@@ -1,4 +1,4 @@
-import EventView from "../../views/EventView"
+import EditEvent from "../../../components/EditEvent"
 const Event = props =>{
     return (
         
