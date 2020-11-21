@@ -13,7 +13,7 @@ import Router from 'next/router';
 class CreateListView extends React.Component{
     constructor(props){
         super(props);
-        this.state = {eventName:"",eventID:"",listID:'',listItems:[],host:this.props.host};
+        this.state = {eventName:"",eventID:"",listID:'',listItems:[],host:this.props.host,emailSent:false};
         this.handleAdd = this.handleAdd.bind(this);
         this.handleItemDeleted = this.handleItemDeleted.bind(this);
         this.sendReminder = this.sendReminder.bind(this);
@@ -62,11 +62,11 @@ class CreateListView extends React.Component{
         this.setState({listItems:list});
     }
     sendReminder(){
-       
+       if(this.state.emailSent){return;}
         let url = "/api/email";
         let sub = `${this.state.eventName} - ${getUsername()}'s list`
         let msg = `${getUsername()} has created a list for ${this.state.eventName}!.
-        This list can be can be viewed: <a href="${this.state.host}/list/${this.state.listID}">${this.state.host}/list/${this.state.listID}</a>`;
+        This list can be can be viewed: <a href="http://familylistapp.com/list/${this.state.listID}">http://familylistapp.com/list/${this.state.listID}</a>`;
         
         let data = {
             eventID: this.state.eventID,
@@ -74,8 +74,10 @@ class CreateListView extends React.Component{
             subject:sub
         }
         AuthPostRequest(url,data,getKey());
+        this.setState({emailSent:true})
     }
     render(){
+        if(this.state.eventName.length <=0){return <></>;}
         let url = "/event/"+this.state.eventID;
         let items = this.state.listItems;
 

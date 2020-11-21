@@ -31,7 +31,8 @@ export default async function (req, res) {
             }
             
         );
-        res.json(Users);
+        let data = {authorized:true,users:Users}
+        res.json(data);
         return;
     }else if(req.method === "POST"){
         let userObj = JSON.parse(req.body);

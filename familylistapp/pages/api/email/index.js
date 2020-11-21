@@ -42,15 +42,36 @@ export default async function (req, res) {
                     as:'Givers',
                     attributes:['email']
                     
+                },
+                {
+                    model:model.sequelize.models.user,
+                    as:'Recievers',
+                    attributes:['email']
+                    
                 }
                 ]
         
             });
+            
+            let givers = eventData.dataValues.Givers;
+            let recievers = eventData.dataValues.Recievers;
+            let emailTo = [];
+            givers.forEach(g=>{
+                
+                emailTo.push(g.dataValues.email);
+            });
+            recievers.forEach(r=>{
+                
+                emailTo.push(r.dataValues.email);
+            });           
+            
             let to = emailTo;
+            console.log(emailTo);
             let subject = postObj["subject"];
             let emailResult = await sendEmail(to,subject,body);
             console.log(emailResult);
         res.json({authorized:true,result:emailResult});
+        return;
     }
 
     res.json({});

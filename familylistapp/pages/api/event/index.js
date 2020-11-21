@@ -12,7 +12,7 @@ export default async function (req, res) {
         console.log(dataObj);
         let eventData = {
             eventName:dataObj.name,
-            eventDate: dataObj.date,
+            eventDate:new Date(dataObj.date),
             comments:dataObj.comments,
             image:"/event_images/"+(Math.floor(Math.random() * 24)+1)+".jpg"
         }
@@ -25,7 +25,12 @@ export default async function (req, res) {
         }
         return res.json(data);
     }
-    
+    const {
+        query: { id },
+      } = req
+    // if(id !==undefined && id !==null){
+
+    // }else{
     let dateTime = Date.now();
     let EventJson = await model.sequelize.models.events.findAll(
         {
@@ -41,4 +46,6 @@ export default async function (req, res) {
         data:EventJson
     }
     res.json(data);
+    return;
+    //}
 }

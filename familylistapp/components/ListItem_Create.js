@@ -12,7 +12,7 @@ import  Router  from 'next/router';
 class CreateListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: '', quantity: 1, comments: '', url: '', validated:false };
+        this.state = { id:-1,listID: -1,inEdit: this.props.edit, itemName: '', cost: 0, quantity: 1, comments: '', url: '', validated:false };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCost = this.handleCost.bind(this);
@@ -51,7 +51,7 @@ class CreateListItem extends React.Component {
     }
     deleteCallback(){
             let url = "/api/listitem/"+this.state.id;
-            AuthDeleteRequest(url,getKey()).then((data)=>{
+            AuthDeleteRequest(url,{},getKey()).then((data)=>{
                 console.log(data);
                 this.props.itemDeleted(this.state.id);
 
@@ -130,7 +130,7 @@ class CreateListItem extends React.Component {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text>$</InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <Form.Control name="cost" required type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
+                                        <Form.Control name="cost" type="number" min="0" value={this.state.cost} step="any" onChange={this.handleCost} />
                                         <Form.Control.Feedback type="invalid">
                                         Please enter the item cost. If there is no cost, enter 0.
                                         </Form.Control.Feedback>
