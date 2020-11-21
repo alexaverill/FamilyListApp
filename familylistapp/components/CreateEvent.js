@@ -195,7 +195,8 @@ class CreateEvent extends React.Component {
         return (
             <Container className="innerContent">
                 <Row><Link href={url}>
-                <a className="backlink"> &lt; Return to Admin </a></Link> </Row> 
+
+                <a className="backlink"> &lsaquo;&lsaquo; Return Home </a></Link> </Row> 
                 <h2>Create New Event</h2>
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle" as={Row}>
