@@ -11,11 +11,13 @@ import styles from '../styles/create.event.module.css'
 import { getKey } from '../utils/session.js';
 import Router from 'next/router';
 import Link from 'next/link'
-class CreateEvent extends React.Component {
+class EditEvent extends React.Component {
     
     constructor(props){
         super(props);
-        this.state = {name:'',
+        this.state = {
+                    id:-1,
+                    name:'',
                     date:new Date(),
                     comments:'',
                     users:[{id:1,username:"test"},{id:2,username:"lol"}],
@@ -78,6 +80,7 @@ class CreateEvent extends React.Component {
             
             let url = "/api/event";
             let data = {
+                id:this.state.id,
                 name:this.state.name,
                 date:this.state.date,
                 comments:this.state.comments,
@@ -85,10 +88,10 @@ class CreateEvent extends React.Component {
                 receiving:this.state.receiving
             }
             AuthPostRequest(url,data,getKey()).then(data=>{
-                if(!data.authorized){Router.push('/login'); return;}
+                //if(!data.authorized){Router.push('/login'); return;}
                 console.log(data);
-                let id = data.data.id;
-                let url = "/event/"+id;
+                let id = data.data[0].id;
+                let url = "/event/edit/"+id;
                 Router.push(url);
             });
         }
@@ -144,73 +147,102 @@ class CreateEvent extends React.Component {
         return users;
     }
     componentDidMount(){
+        let eventURL = "/api/event/"+this.props.id;
         let url = "/api/user";
-
-     AuthGetRequest(url,getKey()).then((data)=>{
-         console.log(data);
-         let user = data.users;
-         if(!data.authorized){Router.push("/login");}
-          this.setState({users:user});
-          this.state.users.map((u)=> {
-            this.setState((state, props) => ({
-                    givingStatus:  [...state.givingStatus,false],
-                    receivingStatus: [...state.givingStatus,false]
-                  }));
-            
-        });
-        
-        //this.setState({users:userList});
+        AuthGetRequest(eventURL,getKey()).then(eventData=>{
+            console.log(eventData);
+            if(!eventData.authorized){Router.push("/login");}
+            let dateStr = eventData.data.eventDate.split("T")[0];
+            let givers = eventData.data.Givers.map(u=> u.id);
+            let recievers = eventData.data.Recievers.map(u=>u.id);
+            this.setState({
+                id:eventData.data.id,
+                name:eventData.data.eventName,
+                date: dateStr,
+                giving:givers,
+                receiving:recievers
+            })
+            return {givers:eventData.data.Givers,recievers:eventData.data.Recievers};
+        }).then((givingData)=>{
+                AuthGetRequest(url,getKey()).then((data)=>{
+                let currentGivers = givingData.givers;
+                let currentRecievers = givingData.recievers;
+                let user = data.users;
+                if(!data.authorized){Router.push("/login");}
+                this.setState({users:user});
+                this.state.users.map((u)=> {
+                    let giverCheckedState = this.idInUserArr(currentGivers,u.id);
+                    let recieverCheckedState = this.idInUserArr(currentRecievers,u.id);
+                    this.setState((state, props) => ({
+                            givingStatus:  [...state.givingStatus,giverCheckedState],
+                            receivingStatus: [...state.givingStatus,recieverCheckedState]
+                        }));
+                    
+                });
+                
+                //this.setState({users:userList});
+            })
     });
+    
+    }
+    idInUserArr(userArr, id){
+        for(let x =0; x<userArr.length; x++){
+            if(userArr[x].id === id){
+                return true;
+            }
+        }
+        return false;
+        
     }
     checkAllGiving(e){
         
-            let currentState = e.target.checked;
-            if(currentState){
-                this.setState((state, props) => ({
-                    givingStatus: state.givingStatus.map((val)=>{
-                        return currentState;
-                    }),
-                    giving:state.users.map((usr)=>{
-                        
-                            return usr.id;
-                        
-                    })
-                }));
-            }else{
-                this.setState((state, props) => ({
-                    givingStatus: state.givingStatus.map((val)=>{
-                        return currentState;
-                    }),
-                    giving:[]
-                }));
-            }
-            
+        let currentState = e.target.checked;
+        if(currentState){
+            this.setState((state, props) => ({
+                givingStatus: state.givingStatus.map((val)=>{
+                    return currentState;
+                }),
+                giving:state.users.map((usr)=>{
+                    
+                        return usr.id;
+                    
+                })
+            }));
+        }else{
+            this.setState((state, props) => ({
+                givingStatus: state.givingStatus.map((val)=>{
+                    return currentState;
+                }),
+                giving:[]
+            }));
         }
-        checkAllReceiving(e){
-    
-              let currentState = e.target.checked;
-              if(currentState){
-                  this.setState((state, props) => ({
-                    receivingStatus: state.givingStatus.map((val)=>{
-                          return currentState;
-                      }),
-                      receiving:state.users.map((usr)=>{
-                          
-                              return usr.id;
-                          
-                      })
-                  }));
-              }else{
-                  this.setState((state, props) => ({
-                    receivingStatus: state.givingStatus.map((val)=>{
-                          return currentState;
-                      }),
-                      receiving:[]
-                  }));
-              }
-        }
-    render() {
+        
+    }
+    checkAllReceiving(e){
 
+          let currentState = e.target.checked;
+          if(currentState){
+              this.setState((state, props) => ({
+                receivingStatus: state.givingStatus.map((val)=>{
+                      return currentState;
+                  }),
+                  receiving:state.users.map((usr)=>{
+                      
+                          return usr.id;
+                      
+                  })
+              }));
+          }else{
+              this.setState((state, props) => ({
+                receivingStatus: state.givingStatus.map((val)=>{
+                      return currentState;
+                  }),
+                  receiving:[]
+              }));
+          }
+    }
+    render() {
+        
         const items = this.state.users.map((u,index)=> {
             
         let result = <Form.Group controlId="formBasicCheckbox" className={styles.userRow} as={Row}>  
@@ -228,8 +260,8 @@ class CreateEvent extends React.Component {
             <Container className="innerContent">
                 <Row><Link href={url}>
 
-                <a className="backlink"> &lsaquo;&lsaquo; Return Home </a></Link> </Row> 
-                <h2>Create New Event</h2>
+                <a className="backlink"> &lsaquo;&lsaquo; Return To Admin Page </a></Link> </Row> 
+                <h2>Editing: {this.state.name}</h2>
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle" as={Row}>
                         <Form.Label column sm="2">Name</Form.Label>
@@ -265,12 +297,12 @@ class CreateEvent extends React.Component {
                     {this.state.receivingError ? <Row><Col>At least one person needs to receive gifts.</Col></Row> : <></>}
                     
                     <Button variant="primary" type="submit">
-                        Create Event
+                        Update Event
                     </Button>
                 </Form>
             </Container>
         );
     }
 }
-export default CreateEvent
+export default EditEvent
 
