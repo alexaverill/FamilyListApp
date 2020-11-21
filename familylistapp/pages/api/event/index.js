@@ -54,9 +54,7 @@ export default async function (req, res) {
     let dateTime = Date.now();
     let EventJson = await model.sequelize.models.events.findAll(
         {
-            eventDate:{
-                [model.Sequelize.Op.gt]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
-            },
+            
             attributes: ['id', 'eventName', 'eventDate','image'],
             
             include:["Givers","Recievers"]
