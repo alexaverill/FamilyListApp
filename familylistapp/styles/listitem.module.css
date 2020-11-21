@@ -1,0 +1,8 @@
+.listRowclaimed{
+    background-color: #00647c;
+    color:white;
+    font-weight: bold;
+  }
+  .claimSection{
+    flex-direction: column;
+  }

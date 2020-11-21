@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 //import {claimItem, unclaimItem, getUser} from './API';
 import {getID, getKey} from '../utils/session'
 import {AuthGetRequest, AuthPostRequest} from '../utils/api';
+import styles from "../styles/listitem.module.css";
 class ListItem extends React.Component {
     constructor(props){
         super(props);
@@ -47,18 +48,24 @@ class ListItem extends React.Component {
         });
     }
     render() {
-        let button;
+        let button=<></>;;
         let deleteBtn;
+        let bgClass = "";
+        let claimedText = ""
         if(this.props.edit){
             button = <Button variant="outline-primary" className="claimBtn" onClick={this.props.editCallback}> Edit </Button>
             deleteBtn = <Button variant="outline-danger" className="claimBtn" onClick={this.props.deleteCallback}> Delete </Button>
         }else{
             if( this.state.claimedBy == getID()){
-                button=<Button variant="outline-primary" className="claimBtn" onClick={this.unclaim}> Unclaim </Button>;
+                bgClass=styles.listRowclaimed;
+                claimedText = "Claimed by you";
+                button=<Button variant="outline-primary" className="unclaimBtn" onClick={this.unclaim}> Unclaim </Button>;
             }else if(this.state.claimed ){
-                button=`Claimed by:${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
+                bgClass=styles.listRow-claimed
+                claimedText=`Claimed by:${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
+                
             }else{
-                button = <Button variant="primary" className="claimBtn" onClick={this.claim}> Claim </Button>
+                button = <Button  className="claimBtn" onClick={this.claim}> Claim </Button>
             }
         }
         let name;
@@ -74,7 +81,7 @@ class ListItem extends React.Component {
         }
         return (
             <>
-                <Row className="listRow" >
+                <Row className={`listRow ${bgClass}` } >
                     <Col xs="8" md="4" lg="3">
                         {name}
                     </Col>
@@ -84,7 +91,8 @@ class ListItem extends React.Component {
                     <Col xs="12" md="6" lg="5">
                         {this.props.comments}
                     </Col>
-                    <Col>
+                    <Col className={styles.claimSection}>
+                        {claimedText}
                         {button}
                     </Col>
                     {deleteBtn? <Col>
