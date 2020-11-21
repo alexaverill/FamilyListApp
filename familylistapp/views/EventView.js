@@ -123,14 +123,12 @@ class EventView extends React.Component {
                     <h2>{title}</h2>
                 </div>
                 <div className="header-date">{date}</div>
-                <Row className="headerRow">
-                    <Col sm={8} className="headerCol">
+                {/* <Row className="headerRow" md={8}>
+                    <Col sm={10} className="headerCol">
                     {this.state.isRecieving && subTitle}
-                </Col>
-                <Col sm={8} className="headerCol text-center">
-                <Link href="#" onClick={this.sendReminder}> Send an email reminder to all participants about this event.</Link>
-                </Col>
-                </Row>
+                     </Col>
+                
+                </Row> */}
             </div>
         
             
