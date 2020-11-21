@@ -12,9 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       console.log(models.models);
       // define association here
-      events.belongsToMany(models.models.user,{as:"Givers",through:'givers'});
-      events.belongsToMany(models.models.user,{as:"Recievers",through:"recievers"});
-      events.hasMany(models.models.lists)
+      //{ onDelete: 'cascade' }
+      events.belongsToMany(models.models.user,{as:"Givers",through:'givers',onDelete:'cascade'});
+      events.belongsToMany(models.models.user,{as:"Recievers",through:"recievers", onDelete:'cascade'});
+      events.hasMany(models.models.lists,{onDelete:'cascade'})
     }
   };
   events.init({
