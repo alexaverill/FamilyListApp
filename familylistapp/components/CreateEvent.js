@@ -95,16 +95,18 @@ class CreateEvent extends React.Component {
 
     }
     handleGiving(event,pos){
-        console.log("Giving Changed "+pos);
+        
         let giveArr = this.state.givingStatus;
         giveArr[pos] = !giveArr[pos];
-        let value = event.target.name;
+        let value = parseInt(event.target.name,10);
         let givingArr = this.state.giving;
         if(event.target.checked){
-            if(givingArr.indexOf(value)<0){
+            
+                let pos = givingArr.indexOf(value);
+                givingArr.splice(pos,1);
                 givingArr.push(value);
                 this.setState({giving:givingArr,givingStatus:giveArr});
-            }
+            
         }else{
         
             let pos = givingArr.indexOf(value);
@@ -113,13 +115,15 @@ class CreateEvent extends React.Component {
         }
     }
     handleReceiving(event,pos){
-        let value = event.target.name;
+        let value = parseInt(event.target.name,10);
         let recieveArr = this.state.receivingStatus;
         recieveArr[pos] = !recieveArr[pos];
         let receivingArr = this.state.receiving;
         if(event.target.checked){
             if(receivingArr.indexOf(value)<0){
-                receivingArr.push(value);
+                let pos = receivingArr.indexOf(value);
+                receivingArr.splice(pos,1);
+                recieveArr.push(value);
                 this.setState({receiving:receivingArr,receivingStatus:recieveArr});
             }
         }else{
@@ -155,28 +159,51 @@ class CreateEvent extends React.Component {
     }
     checkAllGiving(e){
         
-        let currentState = e.target.checked;
-        this.setState((state, props) => ({
-            givingStatus: state.givingStatus.map((val)=>{
-                return currentState;
-            }),
-            giving:state.users.map((usr)=>{
-                return usr.id;
-            })
-          }));
-
-    }
-    checkAllReceiving(e){
-        let currentState = e.target.checked;
-        this.setState((state, props) => ({
-            receivingStatus: state.receivingStatus.map((val)=>{
-                return currentState;
-            }),
-            receiving:state.users.map((usr)=>{
-                return usr.id;
-            })
-          }));
-    }
+            let currentState = e.target.checked;
+            if(currentState){
+                this.setState((state, props) => ({
+                    givingStatus: state.givingStatus.map((val)=>{
+                        return currentState;
+                    }),
+                    giving:state.users.map((usr)=>{
+                        
+                            return usr.id;
+                        
+                    })
+                }));
+            }else{
+                this.setState((state, props) => ({
+                    givingStatus: state.givingStatus.map((val)=>{
+                        return currentState;
+                    }),
+                    giving:[]
+                }));
+            }
+            
+        }
+        checkAllReceiving(e){
+    
+              let currentState = e.target.checked;
+              if(currentState){
+                  this.setState((state, props) => ({
+                    receivingStatus: state.givingStatus.map((val)=>{
+                          return currentState;
+                      }),
+                      receiving:state.users.map((usr)=>{
+                          
+                              return usr.id;
+                          
+                      })
+                  }));
+              }else{
+                  this.setState((state, props) => ({
+                    receivingStatus: state.givingStatus.map((val)=>{
+                          return currentState;
+                      }),
+                      receiving:[]
+                  }));
+              }
+        }
     render() {
 
         const items = this.state.users.map((u,index)=> {

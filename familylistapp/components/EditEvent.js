@@ -98,7 +98,7 @@ class CreateEvent extends React.Component {
 
     }
     handleGiving(event,pos){
-        console.log("Giving Changed "+pos);
+        
         let giveArr = this.state.givingStatus;
         giveArr[pos] = !giveArr[pos];
         let value = parseInt(event.target.name,10);
