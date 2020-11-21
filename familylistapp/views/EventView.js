@@ -26,7 +26,7 @@ class EventView extends React.Component {
             emailSent:false
         };
         
-        this.sendReminder = this.sendReminder.bind(this);
+      
     }
     componentDidMount(){
         let url = "/api/event/"+this.props.id;
@@ -69,20 +69,7 @@ class EventView extends React.Component {
             
         })
     }
-    sendReminder(){
-        if(this.state.emailSent){return;}
-        let url = "/api/email";
-        let sub = `${this.state.name} Reminder`
-        let msg = `This is a reminder that the event: ${this.state.name} has been created for ${this.state.date}. 
-        Lists can be viewed: <a href="http://familylistapp.com/event/${this.state.id}">http://familylistapp.com/event/${this.state.id}</a>`;
-        let data = {
-            eventID:this.state.id,
-            message:msg,
-            subject:sub
-        }
-        AuthPostRequest(url,data,getKey());
-        this.setState({emailSent:true})
-    }
+    
     render(){
         if(this.state.name.length <=0 || this.state.date.length <=0 ){return <></>;}
         let title = this.state.name;

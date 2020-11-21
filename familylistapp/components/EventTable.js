@@ -22,6 +22,7 @@ class EventTable extends React.Component{
         this.handleChangedEmail = this.handleChangedEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.deleteEvent = this.deleteEvent.bind(this);
+        this.sendReminder = this.sendReminder.bind(this);
     }
     findEventPosition(prop,searchVal){
         let e = this.state.events;
@@ -129,15 +130,39 @@ class EventTable extends React.Component{
 
 
     }
+    sendReminder(eventName,eventDate,eventID){
+        console.log(eventID);
+        //return;
+        //if(this.state.emailSent){return;}
+        let url = "/api/email";
+        let sub = `${eventName} Reminder`
+        let msg = `This is a reminder that the event: ${eventName} has been created for ${eventDate}. 
+        Lists can be viewed: <a href="http://familylistapp.com/event/${eventID}">http://familylistapp.com/event/${eventID}</a>`;
+        let data = {
+            eventID:eventID,
+            message:msg,
+            subject:sub
+        }
+        AuthPostRequest(url,data,getKey());
+        this.setState({emailSent:true})
+    }
     render() {
         if(this.state.events.length<=0){return <></>;}
         let eventTable;
         if(this.state.events.length>0){
              eventTable= this.state.events.map((event)=>{
-                
+                //console.log(event);
                 return <tr>
             
                 <td>{event.eventName}</td>
+                <td><Button onClick={(e)=>{
+                    e.preventDefault();
+                    let dateStr = event.eventDate.split("T");
+                    
+                    let date = new Date(dateStr[0]);
+                    
+                    this.sendReminder(event.eventName,date.toDateString(),event.id);
+                }}>Send Reminder</Button></td>
                 <td>{event.eventDate}</td>
                 
                 <td>
@@ -176,6 +201,7 @@ class EventTable extends React.Component{
                 <thead>
                     <tr>
                     <th>Event</th>
+                    <th>Reminder</th>
                     <th>Date</th>
                     <th>Manage</th>
                     
