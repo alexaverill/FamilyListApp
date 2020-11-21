@@ -101,13 +101,15 @@ class CreateEvent extends React.Component {
         console.log("Giving Changed "+pos);
         let giveArr = this.state.givingStatus;
         giveArr[pos] = !giveArr[pos];
-        let value = event.target.name;
+        let value = parseInt(event.target.name,10);
         let givingArr = this.state.giving;
         if(event.target.checked){
-            if(givingArr.indexOf(value)<0){
+            
+                let pos = givingArr.indexOf(value);
+                givingArr.splice(pos,1);
                 givingArr.push(value);
                 this.setState({giving:givingArr,givingStatus:giveArr});
-            }
+            
         }else{
         
             let pos = givingArr.indexOf(value);
@@ -116,13 +118,15 @@ class CreateEvent extends React.Component {
         }
     }
     handleReceiving(event,pos){
-        let value = event.target.name;
+        let value = parseInt(event.target.name,10);
         let recieveArr = this.state.receivingStatus;
         recieveArr[pos] = !recieveArr[pos];
         let receivingArr = this.state.receiving;
         if(event.target.checked){
             if(receivingArr.indexOf(value)<0){
-                receivingArr.push(value);
+                let pos = receivingArr.indexOf(value);
+                receivingArr.splice(pos,1);
+                recieveArr.push(value);
                 this.setState({receiving:receivingArr,receivingStatus:recieveArr});
             }
         }else{
