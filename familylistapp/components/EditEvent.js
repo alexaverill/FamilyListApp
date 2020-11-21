@@ -11,7 +11,7 @@ import styles from '../styles/create.event.module.css'
 import { getKey } from '../utils/session.js';
 import Router from 'next/router';
 import Link from 'next/link'
-class CreateEvent extends React.Component {
+class EditEvent extends React.Component {
     
     constructor(props){
         super(props);
@@ -260,8 +260,8 @@ class CreateEvent extends React.Component {
             <Container className="innerContent">
                 <Row><Link href={url}>
 
-                <a className="backlink"> &lsaquo;&lsaquo; Return Home </a></Link> </Row> 
-                <h2>Create New Event</h2>
+                <a className="backlink"> &lsaquo;&lsaquo; Return To Admin Page </a></Link> </Row> 
+                <h2>Editing: {this.state.name}</h2>
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="eventTitle" as={Row}>
                         <Form.Label column sm="2">Name</Form.Label>
@@ -304,5 +304,5 @@ class CreateEvent extends React.Component {
         );
     }
 }
-export default CreateEvent
+export default EditEvent
 
