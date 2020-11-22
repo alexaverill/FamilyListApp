@@ -147,7 +147,13 @@ class EventTable extends React.Component{
         this.setState({emailSent:true})
     }
     render() {
-        if(this.state.events.length<=0){return <></>;}
+        if(this.state.events.length<=0){return <>
+            <Row>
+            <div className="">
+                    <a href="/event/create" className="btn btn-primary addEventBtn">Add Event</a>
+                </div>
+            </Row>
+            </>;}
         let eventTable;
         if(this.state.events.length>0){
              eventTable= this.state.events.map((event)=>{

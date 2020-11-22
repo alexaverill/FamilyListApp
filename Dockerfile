@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:lts
 
 RUN mkdir /app
 WORKDIR /app
@@ -6,7 +6,7 @@ WORKDIR /app
 COPY ./familylistapp  /app
 
 RUN npm install
-RUN npm update
+#RUN npm update
 #RUN npm run build
 EXPOSE 3000
 

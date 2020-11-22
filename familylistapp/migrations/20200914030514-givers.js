@@ -11,6 +11,7 @@ module.exports = {
     await queryInterface.createTable('givers', {
       userId: {
         type: Sequelize.INTEGER,
+        onDelete:"CASCADE",
         references:{
           model:'users',
           key:'id'
