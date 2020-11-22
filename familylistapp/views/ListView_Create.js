@@ -92,19 +92,20 @@ class CreateListView extends React.Component{
         if(this.state.eventName.length <=0){return <></>;}
         let url = "/event/"+this.state.eventID;
         let items = this.state.listItems;
-        let emailText = this.state.emailSent? "Your wishlist has been shared with everyone. It could take a few minutes for the email to show up." : "When you're finished with your wishlist, use the button below to let everyone know that it's ready";
+        let emailText = this.state.emailSent? "Your wishlist has been shared with everyone. It could take a few minutes for the email to show up." : "When you're finished with your wishlist, use the button below to let everyone know it's ready.";
         return (
             <Container className="innerContent">
                             <Row> <Link href={url}>
                 <a className="backlink"> &lsaquo;&lsaquo; Return to {this.state.eventName}</a></Link> </Row> 
                 <Row className="centered"><h1>Create Your Wishlist for {this.state.eventName}</h1></Row>
                 <Row className="headerRow"><div><p>{emailText}</p></div></Row>
-        <Row className="headerRow"><div>{this.state.emailSent ? <></>:<Button onClick={this.sendReminder}>Share List</Button>}</div></Row>
+        <Row className="headerRow"><div>{this.state.emailSent ? <></>:<Button onClick={this.sendReminder}>Share Wishlist</Button>}</div></Row>
             <div className="item-row">
                     {items}
             </div>
                 <hr></hr>
                 <Button onClick={this.handleAdd}>Add A New Item</Button>
+                
             </Container>
 
         );
