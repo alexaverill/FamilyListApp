@@ -8,6 +8,7 @@ module.exports = {
           type: Sequelize.DataTypes.INTEGER,
           references:{
             model:'events',
+            onDelete:"CASCADE",
             key:'id'
           }
         }, { transaction: t }),
@@ -15,6 +16,7 @@ module.exports = {
           type: Sequelize.DataTypes.INTEGER,
           references:{
             model:'users',
+            onDelete:"CASCADE",
             key:'id'
           }
         }, { transaction: t })

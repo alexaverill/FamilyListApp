@@ -110,12 +110,12 @@ class EventView extends React.Component {
                     <h2>{title}</h2>
                 </div>
                 <div className="header-date">{date}</div>
-                {/* <Row className="headerRow" md={8}>
+                <Row className="headerRow">
                     <Col sm={10} className="headerCol">
                     {this.state.isRecieving && subTitle}
                      </Col>
                 
-                </Row> */}
+                </Row>
             </div>
         
             
