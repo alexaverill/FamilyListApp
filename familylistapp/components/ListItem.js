@@ -54,7 +54,12 @@ class ListItem extends React.Component {
         let claimedText = ""
         if(this.props.edit){
             if(this.props.showClaimed){
-                claimedText = `Given by:${this.state.claimedName}`
+                if(this.state.claimedName){
+                    claimedText = `Given by: ${this.state.claimedName}`
+                }
+                else{
+                    claimedText = ''
+                }
             }else{
                 button = <Button variant="outline-primary" className="claimBtn" onClick={this.props.editCallback}> Edit </Button>
                 deleteBtn = <Button variant="outline-danger"  onClick={this.props.deleteCallback}> Delete </Button>
@@ -66,7 +71,7 @@ class ListItem extends React.Component {
                 button=<Button variant="outline-primary" className="unclaimBtn" onClick={this.unclaim}> Unclaim </Button>;
             }else if(this.state.claimed ){
                 bgClass=styles.listRowClaimedOthers;
-                claimedText=`Claimed by:${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
+                claimedText=`Claimed by: ${this.state.claimedName}`//<Button variant="outline-primary" className="claimBtn" disabled="true"> Claim </Button>;
                 
             }else{
                 button = <Button  className="claimBtn" onClick={this.claim}> Claim </Button>
