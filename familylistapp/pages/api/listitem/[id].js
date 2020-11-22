@@ -29,6 +29,11 @@ export default async function (req, res) {
             id:id
           }
         });
+        let data ={
+          authorized:true,
+          data:{id:id}
+        }
+        return res.json(data);
       }
       let item = model.sequelize.models.list_item.findAll({
         where:{

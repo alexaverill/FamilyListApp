@@ -80,10 +80,10 @@ class CreateListItem extends React.Component {
                 quantity: 1,
                 comments: this.state.comments
             }
-            console.log(listItem);
+            console.log("ID " + this.state.id);
             let url = "/api/listitem";
             if(this.state.id >0){
-            
+                
                 url = "/api/listitem/"+this.state.id;
                 listItem.id = this.state.id;
             }
@@ -92,8 +92,11 @@ class CreateListItem extends React.Component {
                 if(!data.authorized){
                     Router.push("/login");
                 }
-                console.log(data.data);
-                this.setState({ inEdit: false,id:data.data.id });
+                let id = data.data.id;
+                if(this.state.id >0 && id === undefined){
+                    id = this.state.id;
+                }
+                this.setState({ inEdit: false,id:id });
             });
         }
     }
@@ -170,7 +173,8 @@ class CreateListItem extends React.Component {
         } else {
             return (
                 <Row lg={1} md={1} sm={1} xl={1} xs={1}>
-                <ListItem name={this.state.itemName} 
+                <ListItem 
+                    name={this.state.itemName} 
                     cost={this.state.cost} 
                     url ={this.state.url} 
                     quantity={this.state.quantity} 

@@ -17,6 +17,7 @@ class CreateListView extends React.Component{
         this.handleAdd = this.handleAdd.bind(this);
         this.handleItemDeleted = this.handleItemDeleted.bind(this);
         this.sendReminder = this.sendReminder.bind(this);
+        this.refreshList = this.refreshList.bind(this);
     }
     refreshList(){
         let createListURL = "/api/lists"
@@ -39,7 +40,7 @@ class CreateListView extends React.Component{
                 
                 itemArr.forEach((item)=>{
                     
-                    list.push(<CreateListItem  id={item.id} edit={false} listID={this.state.listID} itemDeleted={this.handleItemDeleted}
+                    list.push(<CreateListItem key={item.id} id={item.id} edit={false} listID={this.state.listID} itemDeleted={this.handleItemDeleted}
                         itemName={item.name} cost={item.price} quantity={item.quantity} url={item.url} comments={item.comments} claimed={item.claimedBy} showClaimed={showClaimed}/>);
                 });
             }
