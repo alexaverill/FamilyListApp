@@ -6,6 +6,7 @@ module.exports = {
       return Promise.all([
         queryInterface.addColumn('list_items', 'listId', {
           type: Sequelize.DataTypes.INTEGER,
+          onDelete:"CASCADE",
           references:{
             model:'lists',
             onDelete:"CASCADE",

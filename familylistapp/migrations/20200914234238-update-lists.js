@@ -6,6 +6,7 @@ module.exports = {
       return Promise.all([
         queryInterface.addColumn('lists', 'eventId', {
           type: Sequelize.DataTypes.INTEGER,
+          onDelete:"CASCADE",
           references:{
             model:'events',
             onDelete:"CASCADE",
@@ -14,6 +15,7 @@ module.exports = {
         }, { transaction: t }),
         queryInterface.addColumn('lists', 'userId', {
           type: Sequelize.DataTypes.INTEGER,
+          onDelete:"CASCADE",
           references:{
             model:'users',
             onDelete:"CASCADE",
