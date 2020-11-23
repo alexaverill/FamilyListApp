@@ -80,10 +80,12 @@ class ListItem extends React.Component {
         let name;
         if(this.props.url !== undefined && this.props.url.length >1){
             let url = this.props.url;
-            console.log(url.indexOf("http://"));
-            if(url.indexOf("http://")<0  || url.indexOf("https://") <0){
+            //console.log(url);
+            //console.log(url.indexOf("https://"));
+            if(url.indexOf("http://")<0  && url.indexOf("https://") <0){
                 url = "http://"+url;
             }
+            
             name = <a href={url}>{this.props.name}</a>
         }else{
             name  = this.props.name;
