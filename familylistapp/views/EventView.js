@@ -50,11 +50,12 @@ class EventView extends React.Component {
                     endList.push(lists[x]);
                 }
             }
-            console.log(endList);
+            //console.log(endList);
             let userID = getID();
             let rec = recievers.indexOf(userID) >= 0;
-            let simpleDate = data.data.eventDate.split("Z");
-            let date = new Date(simpleDate[0]);
+            console.log(data.data.eventDate);
+            let simpleDate = data.data.eventDate.split("-");
+            let date =new Date(simpleDate[0],simpleDate[1]-1,simpleDate[2])
             this.setState({
                 name:data.data.eventName,
                 date:date.toDateString(),

@@ -34,8 +34,9 @@ class HomeView extends React.Component{
     render(){
         if(this.state.events.length <=0) {return <></>;}
         const cards = this.state.events.map((e)=> {
-            let simpleDate = e.eventDate.split("Z");
-        return <EventCard date={new Date(simpleDate[0])} title={e.eventName} id={e.id} image={e.image}/>
+            let simpleDate = e.eventDate.split("-");
+            console.log(e.eventDate);
+        return <EventCard date={new Date(simpleDate[0],simpleDate[1]-1,simpleDate[2])} title={e.eventName} id={e.id} image={e.image}/>
         });
 
 
