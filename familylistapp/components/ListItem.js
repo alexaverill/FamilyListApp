@@ -51,7 +51,8 @@ class ListItem extends React.Component {
         let button=<></>;;
         let deleteBtn;
         let bgClass = "";
-        let claimedText = ""
+        let claimedText = "";
+        let linkClass = "";
         if(this.props.edit){
             if(this.props.showClaimed){
                 if(this.state.claimedName){
@@ -67,6 +68,7 @@ class ListItem extends React.Component {
         }else{
             if( this.state.claimedBy == getID()){
                 bgClass=styles.listRowclaimed;
+                linkClass= styles.whitelink;
                 claimedText = "Claimed by: You";
                 button=<Button variant="outline-primary" className="unclaimBtn" onClick={this.unclaim}> Unclaim </Button>;
             }else if(this.state.claimed ){
@@ -86,7 +88,7 @@ class ListItem extends React.Component {
                 url = "http://"+url;
             }
             
-            name = <a href={url}>{this.props.name}</a>
+            name = <a href={url} className={linkClass} target="_blank">{this.props.name}</a>
         }else{
             name  = this.props.name;
         }

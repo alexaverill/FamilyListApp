@@ -3,6 +3,11 @@
     color:white;
     font-weight: bold;
   }
+  .whitelink{
+    
+    color:white;
+    font-weight: bold;
+  }
   .claimSection{
     flex-direction: column;
   }
